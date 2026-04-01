@@ -9,64 +9,86 @@
 - **称呼**：伍学纲，或简称"学纲"
 - **时区**：Asia/Shanghai（GMT+8）
 - **沟通渠道**：飞书（Feishu）
-- **合作项目**：Rippleware（深港智联）
 
 ---
 
-## Rippleware 深港智联
+## 三个公司/项目 + 对应服务器
 
-### 项目背景
+| 项目 | 服务器 | IP | SSH密钥 | 用途 |
+|:---|:---|:---|:---|:---|
+| **Solaripple** | solaripple | 47.100.20.52 | solaripple.pem | 工商业光储投资/运维/交易，EnOS平台 |
+| **Rippleware** | rippleware | 121.43.69.200 | rippleware.pem | 跨境SD-WAN网络解决方案 |
+| **Rippleclaw** | rippleclaw | 47.90.138.136 | rippleclaw.pem | 光储龙虾项目（连不上，待修复）|
 
-伍学纲的创业项目，定位为深港跨境IT基础设施服务商，以七云网络SD-WAN为核心产品，为跨境企业提供AI-Native网络解决方案。
-
-**核心信息**：
-- 商业计划：深圳运营中心 + 香港服务节点 + 理光渠道协同
-- 启动资金：100-140万元
-- 首年成本预算：450-600万元
-- 愿景：首年盈亏平衡，第二年盈利
-
-### 核心合作
-
-| 合作方 | 关系 | 状态 |
-|:---|:---|:---|
-| 七云网络 | 产品供应商/一级代理 | 战略合作意向书已签 |
-| 理光香港 | 渠道合作伙伴 | MOU已签，排他性条款 |
-| 数码港 | 生态合作 | SandBox资源共享 |
-
-### Pre-A融资
-
-- 已完成Pre-A轮路演PPT（20页），评估85/100
-- 目标融资：100万美元
-- 已有3家种子客户Pilot测试
-- LTV/CAC = 5.2:1（行业健康线3:1）
+### SSH配置
+- Host配置已写入 `~/.ssh/config.d/rippleware`
+- 密钥保存于 `~/clawd/rippleware/keys/`
 
 ---
 
-## 项目文件位置
+## Solaripple — 工商业光储
 
-```
-~/clawd/rippleware/
-├── original_plan.md              # 原始商业计划书
-├── 01_EXECUTIVE_SUMMARY.md      # 执行摘要
-├── 02_ANALYSIS_AND_OPTIMIZATION.md  # 分析与优化建议
-├── 03_PRESENTATION_OUTLINE.md   # 路演PPT大纲（18页）
-├── 04_FINANCIAL_MODEL.csv       # 财务模型
-├── 05_RISK_ASSESSMENT.md        # 风险评估（15个风险）
-├── 06_WEBSITE_PROTOTYPE.md      # 网站原型设计文档
-├── deploy.sh                    # GitHub部署脚本
-├── pptx_images/                 # PPT截图（6张）
-└── www/
-    └── index.html               # 网站Demo（可直接浏览器打开）
-```
+**产品**：Ripple EnOS数字孪生平台
+- EMS监控运维
+- AI调度优化（LSTM/Prophet预测）
+- VPP虚拟电厂交易
+- 数字孪生3D可视化
+
+**代码位置**：`~/clawd/ems-work/`
+- 前端：`client/`（React + TypeScript + Three.js）
+- 后端：`server/`（Node.js + MongoDB）
+- 架构：monorepo（npm workspaces）
+
+**本地开发环境**：
+- 前端：http://localhost:3000
+- 后端：http://localhost:8080
+
+**今日Phase 1进展**（2026-04-01）：
+- 安装了Three.js + React Three Fiber
+- 创建了3D组件：Building, SolarArray, BatteryCabinet, ChargingStation
+- 数字孪生页面支持3D/能量流双视图切换
+- 服务器nginx在运行，但后端未部署
+
+**升级路线**（14周）：
+- Phase 1（4周）：Three.js 3D场景
+- Phase 2（3周）：充电桩+储能模块
+- Phase 3（4周）：AI预测+调度引擎
+- Phase 4（3周）：VPP市场交易
 
 ---
 
-## 关于GitHub
+## Rippleware — 跨境SD-WAN
 
-- 伍学纲的GitHub用户名：`xuegangwu`
-- 计划部署到：`xuegangwu.github.io` 或 `rippleware.github.io`
-- GitHub CLI（`gh`）需要登录授权后才能操作
-- 部署待完成（截至2026-04-01尚未授权成功）
+**产品**：七云网络SD-WAN + AI运维
+- 核心差异化：AI-Native运维
+- 渠道合作：理光香港（MOU已签）
+- Pre-A融资中（100万美元目标）
+
+**代码位置**：`~/clawd/rippleware/`
+- `www/index.html` — 官网Demo（纯静态HTML/CSS/JS）
+- `01-05_*.md` — 商业计划、分析、风险评估等
+- `数字孪生平台技术方案_v1.0.md`
+- `ENOS_UPGRADE_ROADMAP.md`
+
+**部署**：
+- 服务器：121.43.69.200 (rippleware)
+- 已部署：http://121.43.69.200/
+- ICP备案问题待解决
+
+**待完成**：
+- GitHub Pages部署（rippleware.github.io）
+- DNS配置 + SSL证书
+- 域名：rippleware.com
+
+---
+
+## Rippleclaw — 光储龙虾
+
+**产品**：光储龙虾项目（具体定位待了解）
+
+**服务器**：47.90.138.136 (rippleclaw)
+- **当前状态**：❌ 端口22连接超时
+- 需要登录阿里云控制台检查
 
 ---
 
@@ -74,22 +96,19 @@
 
 ### 2026-04-01
 
-1. **确定项目名**：Rippleware（涟漪）
-2. **核心差异化**：AI-Native运维 + 深港合规know-how
-3. **网站定位**：做出来了，用途是投资人落地页 + 线索转化
-4. **下一步优先级**：
-   - GitHub部署（需伍学纲执行 `gh auth login`）
-   - 真实客户案例填充
-   - PPT里的监控大屏截图
+1. **确定三个项目完整架构**
+2. **Solaripple**：继续Phase 1的EnOS 3D升级
+3. **Rippleware**：官网已部署到121.43.69.200
+4. **Rippleclaw**：服务器连不上，待修复
 
 ---
 
 ## 工作习惯
 
-- 伍学纲偏好直接给指令（简短）
-- 确认后快速执行
-- 不需要过多解释，直接干活
+- 伍学纲偏好简短指令，直接执行
+- 每次对话结束自动保存记忆
+- 服务器信息、密钥、项目进展都要记住
 
 ---
 
-*每次对话结束后，记得更新此文件和当日memory/文件。*
+*每次对话结束后更新此文件和当日memory/文件。*
