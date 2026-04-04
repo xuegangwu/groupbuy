@@ -1,6 +1,6 @@
 # MEMORY.md — 长期记忆
 
-> 最后更新：2026-04-04
+> 最后更新：2026-04-04（Phase 2 Week 2）
 
 ---
 
@@ -60,17 +60,24 @@
 - ⚠️ 3D Tab移动端黑屏 → SMIL→CSS动画修复（已禁用3D Tab）
 - ⚠️ 数字溢出 → precision={0} + toLocaleString()修复
 
+**Phase 2 Week 2 成果**（2026-04-04）：
+- ✅ SOC感知调度（储能充放电约束：上限95%，下限20%，4.8MWh）
+- ✅ 收益测算（AI调度 vs 无优化基准对比，日/月/年预估）
+- ✅ 峰谷套利 + 削峰收益 + 碳减排量分别统计
+- ✅ AIPrediction页面：收益汇总卡片 + SOC + 收益列 + 调度明细表
+- 后端：calcRevenue() + makeDispatch SOC约束版
+- 模型版本：LSTM-v2.0-solar-soc
+
 **Phase 2 Week 1 成果**（2026-04-04）：
 - ✅ LSTM光伏预测（/api/predict/solar，辐照度模型，bell curve 6am-6pm）
 - ✅ 三合一联合预测（/api/predict/three-in-one：光伏+负荷+电价+dispatch）
 - ✅ AIPrediction页面：三合一联合图表 + 3列独立图表
 - ✅ DigitalTwin VPP面板：新增AI调度Tab（懒加载dispatch建议）
 - 3个LSTM模型（load/price/solar）同时训练，约30秒冷启动
-- 模型版本：LSTM-v2.0-solar
 
 **升级路线**（14周）：
 - Phase 1（4周）：Three.js 3D场景 ← ✅ 完成
-- Phase 2（3周）：光伏LSTM预测 + 负荷预测 ← 🚧 进行中（Week 1/2）
+- Phase 2（3周）：光伏LSTM预测 + 负荷预测 ← 🚧 Week 2完成，待TDengine数据接入
 - Phase 3（4周）：AI调度引擎 + 削峰填谷
 - Phase 4（3周）：VPP市场交易
 
