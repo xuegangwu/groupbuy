@@ -77,9 +77,24 @@
 
 **升级路线**（14周）：
 - Phase 1（4周）：Three.js 3D场景 ← ✅ 完成
-- Phase 2（3周）：光伏LSTM预测 + 负荷预测 ← 🚧 Week 2完成，待TDengine数据接入
-- Phase 3（4周）：AI调度引擎 + 削峰填谷
+- Phase 2（3周）：光伏LSTM预测 + 负荷预测 ← ✅ Week 2完成
+- Phase 3（4周）：AI调度引擎 + 削峰填谷 ← 🚧 下一步
 - Phase 4（3周）：VPP市场交易
+
+### Phase 3 计划（VPP市场对接）
+- **IEC 104 协议**：模拟量遥测（YM）、遥控（YK）、设点控制（YC）
+- **IEC 61850**：GOOSE报文（SOC/BID/SBO）
+- **市场申报**：自动聚合容量上报、电力现货市场报价
+- **调度指令**：接收AGC自动发电控制信号
+
+### 子站汇总
+| 域名 | 状态 | 说明 |
+|:---|:---|:---|
+| `enos.solaripple.com` | ✅ HTTPS | EnOS数字孪生 + AI预测 |
+| `pretext.solaripple.com` | ✅ HTTPS | Pretext文本引擎Demo |
+| `master.solaripple.com` | ⚠️ HTTP | MiroFish-Lite（Flask，port 3002）|
+| `monitor.solaripple.com` | ⚠️ HTTP | WorldMonitor静态部署 |
+| `solaripple.com` | ✅ HTTPS | 公司首页 |
 
 ---
 
