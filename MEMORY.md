@@ -1,6 +1,6 @@
 # MEMORY.md — 长期记忆
 
-> 最后更新：2026-04-01
+> 最后更新：2026-04-04
 
 ---
 
@@ -16,7 +16,7 @@
 
 | 项目 | 服务器 | IP | SSH密钥 | 用途 |
 |:---|:---|:---|:---|:---|
-| **Solaripple** | solaripple | 47.100.20.52 | solaripple.pem | 工商业光储投资/运维/交易，EnOS平台 |
+| **Solaripple** | solaripple | 47.100.20.52 | solaripple.pem | EnOS数字孪生平台 + 公司官网 |
 | **Rippleware** | rippleware | 121.43.69.200 | rippleware.pem | 跨境SD-WAN网络解决方案 |
 | **Rippleclaw** | rippleclaw | 47.90.138.136 | rippleclaw.pem | 光储龙虾项目（连不上，待修复）|
 
@@ -35,6 +35,12 @@
 - 数字孪生3D可视化
 
 **代码位置**：`~/clawd/ems-work/`
+
+**网站结构（2026-04-01 新上线）**：
+- **solaripple.com** / **www.solaripple.com** → 公司介绍首页（静态HTML，响应式）
+- **enos.solaripple.com** → EnOS数字孪生平台（React SPA，数字孪生+能量流+VPP面板）
+- nginx配置：`/etc/nginx/sites-enabled/default`（多server_name）
+- 公司名：光之涟漪
 - 前端：`client/`（React + TypeScript + Three.js）
 - 后端：`server/`（Node.js + MongoDB）
 - 架构：monorepo（npm workspaces）
@@ -44,15 +50,28 @@
 - 后端：http://localhost:8080
 
 **今日Phase 1进展**（2026-04-01）：
-- 安装了Three.js + React Three Fiber
-- 创建了3D组件：Building, SolarArray, BatteryCabinet, ChargingStation
-- 数字孪生页面支持3D/能量流双视图切换
-- 服务器nginx在运行，但后端未部署
+- ✅ 安装了Three.js + React Three Fiber
+- ✅ 创建了3D组件：Building, SolarArray, BatteryCabinet, ChargingStation
+- ✅ 数字孪生页面支持3D/能量流双视图切换
+- ✅ 前后端完整部署到 47.100.20.52
+- ✅ 公司首页重构（solaripple.com 静态 + enos.solaripple.com SPA）
+- ✅ SSL证书（solaripple.com + www + enos）
+- ✅ 数字孪生：能量流CSS动画、VPP面板、响应式、Error Boundary
+- ⚠️ 3D Tab移动端黑屏 → SMIL→CSS动画修复（已禁用3D Tab）
+- ⚠️ 数字溢出 → precision={0} + toLocaleString()修复
+
+**Phase 2 Week 1 成果**（2026-04-04）：
+- ✅ LSTM光伏预测（/api/predict/solar，辐照度模型，bell curve 6am-6pm）
+- ✅ 三合一联合预测（/api/predict/three-in-one：光伏+负荷+电价+dispatch）
+- ✅ AIPrediction页面：三合一联合图表 + 3列独立图表
+- ✅ DigitalTwin VPP面板：新增AI调度Tab（懒加载dispatch建议）
+- 3个LSTM模型（load/price/solar）同时训练，约30秒冷启动
+- 模型版本：LSTM-v2.0-solar
 
 **升级路线**（14周）：
-- Phase 1（4周）：Three.js 3D场景
-- Phase 2（3周）：充电桩+储能模块
-- Phase 3（4周）：AI预测+调度引擎
+- Phase 1（4周）：Three.js 3D场景 ← ✅ 完成
+- Phase 2（3周）：光伏LSTM预测 + 负荷预测 ← 🚧 进行中（Week 1/2）
+- Phase 3（4周）：AI调度引擎 + 削峰填谷
 - Phase 4（3周）：VPP市场交易
 
 ---
@@ -86,6 +105,20 @@
 
 **产品**：光储龙虾项目（具体定位待了解）
 
+### Solaripple 服务器 (47.100.20.52)
+
+**部署完成** (2026-04-01):
+- solaripple.com + www → /usr/share/nginx/html/ (公司首页)
+- enos.solaripple.com → /var/www/enos/ (React SPA)
+- 后端：PM2 `solaripple-api` 在 8080
+- SSL：Let's Encrypt ECDSA（已覆盖 solaripple.com + www + enos.solaripple.com）
+- gzip：已开启
+- Nginx：/etc/nginx/sites-enabled/default
+
+---
+
+## Rippleclaw — 光储龙虾
+
 **服务器**：47.90.138.136 (rippleclaw)
 - **当前状态**：❌ 端口22连接超时
 - 需要登录阿里云控制台检查
@@ -108,6 +141,16 @@
 - 伍学纲偏好简短指令，直接执行
 - 每次对话结束自动保存记忆
 - 服务器信息、密钥、项目进展都要记住
+
+## ⚠️ 部署流程（重要）
+
+**每次部署前必须先完成 GitHub 同步：**
+1. `git add -A`
+2. `git commit -m "描述"`
+3. `git push origin main`
+4. 确认推送成功后再执行部署
+
+步骤：源码修改 → GitHub 提交 → 构建 → 部署到服务器
 
 ---
 

@@ -1,0 +1,15 @@
+{
+  "name": "Solaripple",
+  "short_name": "Solaripple",
+  "description": "Industrial Clean Energy Digital Infrastructure",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0E1A",
+  "theme_color": "#00D4AA",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icons/icon-192.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "categories": ["business", "productivity", "utilities"]
+}

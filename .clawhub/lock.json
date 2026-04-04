@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "skills": {
+    "openclaw-skill-vetter": {
+      "version": "1.0.0",
+      "installedAt": 1775193125855
+    },
+    "agent-browser-clawdbot": {
+      "version": "0.1.0",
+      "installedAt": 1775193264250
+    },
+    "liang-tavily-search": {
+      "version": "1.0.1",
+      "installedAt": 1775193666822
+    },
+    "multi-search-engine": {
+      "version": "2.0.1",
+      "installedAt": 1775193698085
+    }
+  }
+}

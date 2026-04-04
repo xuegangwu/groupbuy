@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solaripple — 工业清洁能源数字基础设施</title>
+  <meta name="description" content="Solaripple（光之涟漪科技）专注于工业园区光储充一体化数字孪生平台，为工商业客户提供新能源资产智能管理与虚拟电厂交易服务。" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #0A0E1A;
+      color: #E8EAF0;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 60px; height: 64px;
+      background: rgba(10,14,26,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      font-size: 20px; font-weight: 700; color: white;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo span { color: #00D4AA; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 14px; color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: white; }
+    .nav-cta {
+      padding: 8px 20px;
+      background: #00D4AA; color: #0A0E1A;
+      border-radius: 6px; font-size: 14px; font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 120px 24px 80px;
+      position: relative;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,212,170,0.12) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 16px; border-radius: 20px;
+      background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.25);
+      font-size: 12px; color: #00D4AA; margin-bottom: 32px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800; line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #A8B4C8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      max-width: 800px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #00D4AA 0%, #00A890 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 18px; color: rgba(255,255,255,0.5);
+      max-width: 560px; line-height: 1.7; margin-bottom: 48px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      padding: 14px 32px; background: #00D4AA; color: #0A0E1A;
+      border-radius: 8px; font-size: 15px; font-weight: 600;
+      transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: #00EBC0; transform: translateY(-1px); }
+    .btn-secondary {
+      padding: 14px 32px; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12); color: white;
+      border-radius: 8px; font-size: 15px; font-weight: 500;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+    /* Stats */
+    .stats {
+      display: flex; gap: 0; justify-content: center;
+      padding: 60px 40px; border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap;
+    }
+    .stat-item { flex: 1; min-width: 160px; text-align: center; padding: 20px 40px; }
+    .stat-num { font-size: 40px; font-weight: 800; color: #00D4AA; line-height: 1; margin-bottom: 8px; }
+    .stat-num span { font-size: 20px; font-weight: 500; }
+    .stat-label { font-size: 13px; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+
+    /* Products */
+    .section { padding: 100px 60px; }
+    .section-label {
+      font-size: 12px; font-weight: 600; color: #00D4AA;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px); font-weight: 700;
+      margin-bottom: 16px; line-height: 1.2;
+    }
+    .section-desc { font-size: 16px; color: rgba(255,255,255,0.45); max-width: 560px; line-height: 1.7; margin-bottom: 64px; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px; max-width: 1200px; margin: 0 auto;
+    }
+    .product-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 40px 36px;
+      transition: all 0.3s; cursor: default;
+    }
+    .product-card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(0,212,170,0.25);
+      transform: translateY(-4px);
+    }
+    .product-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin-bottom: 24px;
+    }
+    .product-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+    .product-card p { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.7; margin-bottom: 20px; }
+    .product-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag {
+      padding: 4px 10px; border-radius: 6px;
+      font-size: 11px; font-weight: 500;
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .tag.green { background: rgba(0,212,170,0.1); color: #00D4AA; border-color: rgba(0,212,170,0.2); }
+    .tag.orange { background: rgba(255,149,0,0.1); color: #FF9500; border-color: rgba(255,149,0,0.2); }
+    .tag.blue { background: rgba(0,102,255,0.1); color: #5B9EFF; border-color: rgba(0,102,255,0.2); }
+    .tag.purple { background: rgba(155,89,182,0.1); color: #B07FDB; border-color: rgba(155,89,182,0.2); }
+
+    /* Platform teaser */
+    .platform-section {
+      background: linear-gradient(180deg, rgba(0,212,170,0.06) 0%, transparent 100%);
+      border-top: 1px solid rgba(0,212,170,0.1);
+      border-bottom: 1px solid rgba(0,212,170,0.1);
+    }
+    .platform-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      max-width: 1200px; margin: 0 auto; align-items: center;
+    }
+    .platform-text h2 { font-size: 36px; font-weight: 700; margin-bottom: 20px; line-height: 1.3; }
+    .platform-text p { font-size: 15px; color: rgba(255,255,255,0.45); line-height: 1.8; margin-bottom: 32px; }
+    .platform-features { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+    .platform-features li {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 15px; color: rgba(255,255,255,0.7);
+    }
+    .platform-features li::before {
+      content: '✓'; width: 22px; height: 22px;
+      background: rgba(0,212,170,0.15); color: #00D4AA;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 12px; flex-shrink: 0;
+    }
+    .platform-visual {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 32px;
+      font-size: 13px; color: rgba(255,255,255,0.3);
+    }
+    .platform-visual pre {
+      font-family: 'Fira Code', 'SF Mono', monospace;
+      font-size: 12px; color: rgba(0,212,170,0.7); line-height: 1.8;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center; padding: 120px 60px;
+      background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(0,212,170,0.1) 0%, transparent 70%);
+    }
+    .cta-section h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; margin-bottom: 20px; }
+    .cta-section p { font-size: 16px; color: rgba(255,255,255,0.4); margin-bottom: 48px; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 60px 60px 40px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
+      max-width: 1200px; margin: 0 auto 60px;
+    }
+    .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.7; margin-top: 16px; max-width: 280px; }
+    .footer-col h4 { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a { font-size: 13px; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+    .footer-col a:hover { color: #00D4AA; }
+    .footer-bottom {
+      text-align: center; padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 12px; color: rgba(255,255,255,0.2);
+      max-width: 1200px; margin: 0 auto;
+    }
+
+/* ─── Responsive: Tablet (iPad) ─────────────────────────────────── */
+    @media (max-width: 1024px) {
+      nav { padding: 0 40px; }
+      .section { padding: 80px 40px; }
+      .hero h1 { font-size: clamp(36px, 5vw, 56px); }
+      .hero-sub { font-size: 16px; }
+      .products-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+      .platform-grid { gap: 60px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .stats { padding: 48px 32px; }
+    }
+
+    @media (max-width: 900px) {
+      .platform-grid { grid-template-columns: 1fr; gap: 40px; }
+      .platform-visual { display: none; }
+    }
+
+    /* ─── Responsive: Mobile ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 56px; }
+      .nav-links { display: none; }
+      .nav-cta { padding: 7px 16px; font-size: 13px; }
+
+      .hero { padding: 100px 20px 60px; min-height: auto; }
+      .hero h1 { font-size: clamp(28px, 8vw, 40px); margin-bottom: 16px; }
+      .hero-sub { font-size: 14px; margin-bottom: 32px; }
+      .hero-badge { font-size: 11px; padding: 5px 12px; }
+      .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+      .hero-actions a { text-align: center; }
+
+      .stats { flex-wrap: wrap; padding: 40px 20px; gap: 0; }
+      .stat-item { min-width: 50%; padding: 16px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+      .stat-num { font-size: 28px; }
+
+      .section { padding: 64px 20px; }
+      .section-label { font-size: 11px; }
+      .section-title { font-size: clamp(22px, 6vw, 32px); margin-bottom: 12px; }
+      .section-desc { font-size: 14px; margin-bottom: 40px; }
+
+      .products-grid { grid-template-columns: 1fr; gap: 16px; }
+      .product-card { padding: 28px 24px; }
+      .product-icon { width: 48px; height: 48px; font-size: 24px; margin-bottom: 16px; }
+      .product-card h3 { font-size: 18px; }
+      .product-card p { font-size: 13px; }
+
+      .platform-section { padding: 64px 20px; }
+      .platform-text h2 { font-size: 26px; }
+      .platform-text p { font-size: 14px; }
+      .platform-features li { font-size: 13px; }
+      .platform-features { gap: 12px; margin-bottom: 28px; }
+
+      .cta-section { padding: 80px 20px; }
+      .cta-section h2 { font-size: clamp(22px, 6vw, 34px); }
+      .cta-section p { font-size: 14px; }
+      .cta-section .btn-primary, .cta-section .btn-secondary { width: 100%; text-align: center; }
+
+      footer { padding: 48px 20px 32px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-brand p { max-width: 100%; }
+      .footer-col h4 { margin-bottom: 14px; }
+      .footer-col ul { gap: 10px; }
+      .footer-bottom { font-size: 11px; }
+    }
+
+    /* ─── Responsive: Small Mobile ─────────────────────────────────── */
+    @media (max-width: 480px) {
+      .hero { padding: 88px 16px 48px; }
+      .stat-item { min-width: 100%; }
+      .section { padding: 48px 16px; }
+      .products-grid { gap: 12px; }
+      .product-card { padding: 20px 16px; }
+      .product-tags { gap: 6px; }
+      .tag { font-size: 10px; padding: 3px 8px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">Solaripple</div>
+  <ul class="nav-links">
+    <li><a href="#products">产品方案</a></li>
+    <li><a href="#platform">数字孪生平台</a></li>
+    <li><a href="#about">关于我们</a></li>
+    <li><a href="https://enos.solaripple.com" style="color:#00D4AA">进入平台 →</a></li>
+  </ul>
+  <a href="https://enos.solaripple.com" class="nav-cta">开始使用</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">⚡ 工业清洁能源数字基础设施</div>
+  <h1>让每一座工业园区<br/>拥有<em>智慧能源大脑</em></h1>
+  <p class="hero-sub">Solaripple 基于数字孪生、人工智能与优化算法，为工商业园区提供光储充一体化管理与虚拟电厂交易服务，降低电费、提升资产收益。</p>
+  <div class="hero-actions">
+    <a href="https://enos.solaripple.com" class="btn-primary">🌐 进入 EnOS 平台</a>
+    <a href="#products" class="btn-secondary">了解产品方案</a>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-num">500<span>+ MW</span></div>
+    <div class="stat-label">管理装机容量</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">50<span>+ 园区</span></div>
+    <div class="stat-label">服务工业客户</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">15<span>-25%</span></div>
+    <div class="stat-label">平均电费节约</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">99.9<span>%</span></div>
+    <div class="stat-label">系统可用率</div>
+  </div>
+</div>
+
+<!-- Products -->
+<section class="section" id="products">
+  <div class="section-label">核心产品</div>
+  <h2 class="section-title">三位一体能源管理体系</h2>
+  <p class="section-desc">从硬件层到应用层，从实时监控到智能决策，构建完整的工业园区智慧能源闭环。</p>
+
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(255,200,0,0.12)">☀️🔋</div>
+      <h3>光储充一体化</h3>
+      <p>集成光伏、储能、充电桩三大模块，实时监测设备运行状态，智能调度能量流向，提升自发自用率与系统效率。</p>
+      <div class="product-tags">
+        <span class="tag orange">光伏监控</span>
+        <span class="tag green">储能BMS</span>
+        <span class="tag blue">有序充电</span>
+        <span class="tag">需量管理</span>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(0,212,170,0.12)">🪩</div>
+      <h3>数字孪生平台</h3>
+      <p>基于 Three.js 的工业园区三维实时映射，设备状态与能量流动可视化，支持移动端随时随地查看运行全景。</p>
+      <div class="product-tags">
+        <span class="tag green">3D 可视化</span>
+        <span class="tag blue">实时数据</span>
+        <span class="tag purple">VPP 聚合</span>
+        <span class="tag">AI 预测</span>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(102,126,234,0.12)">🏭</div>
+      <h3>虚拟电厂 (VPP)</h3>
+      <p>聚合分布式储能、充电桩、可中断负荷，参与电网调峰调频与需求响应，获取辅助服务收益与需求响应补贴。</p>
+      <div class="product-tags">
+        <span class="tag purple">容量聚合</span>
+        <span class="tag green">市场交易</span>
+        <span class="tag orange">收益分配</span>
+        <span class="tag">辅助服务</span>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(255,77,79,0.08)">🤖</div>
+      <h3>AI 调度引擎</h3>
+      <p>LSTM 时序预测 + MILP 优化算法，提前预测负荷与光伏出力，制定次日充放电计划与需量控制策略。</p>
+      <div class="product-tags">
+        <span class="tag orange">LSTM 预测</span>
+        <span class="tag green">削峰填谷</span>
+        <span class="tag purple">MILP 调度</span>
+        <span class="tag">需量控制</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Platform -->
+<section class="section platform-section" id="platform">
+  <div class="platform-grid">
+    <div class="platform-text">
+      <div class="section-label">数字孪生平台</div>
+      <h2>EnOS — 园区能源<br/>一站式管理</h2>
+      <p>EnOS (Energy Operating System) 是 Solaripple 打造的工业能源数字底座，将物理世界的能源设备完整映射到数字空间。</p>
+      <ul class="platform-features">
+        <li>实时 3D 可视化园区全景，设备状态一目了然</li>
+        <li>光伏/储能/充电桩/电网全量数据接入，3 秒级刷新</li>
+        <li>AI 负荷与光伏出力预测，提前调度决策</li>
+        <li>VPP 虚拟电厂聚合，实时对接电力交易中心</li>
+        <li>移动端自适应，随时随地掌控能源资产</li>
+      </ul>
+      <a href="https://enos.solaripple.com" class="btn-primary" style="display:inline-flex; width:fit-content;">🌐 打开 EnOS 平台 →</a>
+    </div>
+    <div class="platform-visual">
+      <pre>
+$ curl https://enos.solaripple.com/api/stations
+{
+  "data": [
+    {
+      "id": "station-001",
+      "name": "苏州工业园光储充",
+      "type": "solar_storage",
+      <span style="color:#FFD700">      "generation": 4032,   ← 实时发电 kW</span>
+      <span style="color:#9B59B6">      "consumption": 2800,  ← 负载 kW</span>
+      <span style="color:#00D4AA">      "storageSoc": 78,     ← 储能 SOC %</span>
+      <span style="color:#38A169">      "evCharging": 60,     ← 充电桩 kW</span>
+    }
+  ]
+}
+<span style="color:rgba(255,255,255,0.3)">// 3秒自动刷新 · RESTful + WebSocket</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="about">
+  <h2>准备好升级你的能源管理了吗？</h2>
+  <p>无论是新建园区还是存量改造，Solaripple 团队提供从方案设计到运营维护的全流程服务。</p>
+  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+    <a href="https://enos.solaripple.com" class="btn-primary">🌐 体验 EnOS 平台</a>
+    <a href="mailto:contact@solaripple.com" class="btn-secondary">📧 联系我们</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="font-size:18px">Solaripple</div>
+      <p>光之涟漪 · 专注于工业清洁能源数字化，服务长三角地区工业园区客户。</p>
+    </div>
+    <div class="footer-col">
+      <h4>产品</h4>
+      <ul>
+        <li><a href="https://enos.solaripple.com">EnOS 数字孪生</a></li>
+        <li><a href="https://enos.solaripple.com/digital-twin">3D 可视化</a></li>
+        <li><a href="https://enos.solaripple.com/vpp">VPP 虚拟电厂</a></li>
+        <li><a href="https://enos.solaripple.com/ai-prediction">AI 预测引擎</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>方案</h4>
+      <ul>
+        <li><a href="#products">光储充一体</a></li>
+        <li><a href="#products">需量管理</a></li>
+        <li><a href="#products">削峰填谷</a></li>
+        <li><a href="#products">需求响应</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>联系</h4>
+      <ul>
+        <li><a href="mailto:contact@solaripple.com">contact@solaripple.com</a></li>
+        <li><a href="#">江苏省苏州市</a></li>
+        <li><a href="#">+86 512 xxx xxxxx</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 光之涟漪 (Solaripple) · 苏ICP备xxxxxxxx号 · 版权所有
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+
+</body>
+</html>
