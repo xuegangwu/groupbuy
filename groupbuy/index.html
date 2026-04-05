@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solaripple GroupBuy — 工商业光储团购平台</title>
+<meta name="description" content="工商业储能系统拼团购买，3台起享15%折扣，5台20%，10台25%。IRR快速测算。">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+a{text-decoration:none}
+:root{--bg:#0A0A14;--bg2:#0F0F1E;--bg3:#141428;--bg4:#1C1C38;--accent:#FF8C00;--accent2:#FF6B00;--accent3:rgba(255,140,0,0.12);--text:#f0f0f5;--text2:#8888aa;--text3:#444466;--border:rgba(255,255,255,0.06);--card:rgba(255,255,255,0.04);--teal:#00D4AA;--green:#00C853;--red:#FF4D4D;}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+::selection{background:rgba(255,140,0,0.3)}
+nav{display:flex;align-items:center;padding:0 48px;height:64px;background:rgba(10,10,20,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100}
+.nav-logo{font-size:18px;font-weight:900;display:flex;align-items:center;gap:8px}
+.nav-logo .ic{color:var(--accent);font-size:22px}
+.nav-logo .sub{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-left:6px}
+.nav-links{display:flex;align-items:center;gap:4px;margin-left:40px}
+.nav-links a{padding:6px 14px;border-radius:8px;font-size:13px;color:var(--text2);transition:all .2s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{background:var(--bg3);color:var(--accent)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.nav-home{display:inline-flex;align-items:center;padding:6px 14px;background:var(--accent3);border:1px solid rgba(255,140,0,0.25);border-radius:8px;color:var(--accent);font-size:13px;font-weight:700;transition:all .2s}
+.nav-home:hover{background:rgba(255,140,0,0.2)}
+.nav-user{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:700;color:var(--text2)}
+.nav-user .avatar{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0}
+.hero{padding:80px 48px 60px;background:radial-gradient(ellipse 90% 60% at 50% -5%,rgba(255,140,0,0.08) 0%,transparent 65%);text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:100px;padding:6px 16px;font-size:12px;color:var(--text2);margin-bottom:20px}
+.hero h1{font-size:clamp(36px,5vw,60px);font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:14px}
+.hero h1 .line1{color:var(--text2);font-weight:300}
+.hero h1 .line2{background:linear-gradient(135deg,#FF8C00,#FFB347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--text2);font-size:16px;max-width:560px;margin:0 auto 32px;line-height:1.7}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#000;border-radius:12px;padding:12px 24px;font-weight:800;font-size:15px;transition:all .2s;border:none;cursor:pointer}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 10px 30px rgba(255,140,0,0.35)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:12px;padding:12px 24px;font-weight:700;font-size:15px;transition:all .2s;cursor:pointer}
+.btn-ghost:hover{background:var(--bg3);color:var(--text);border-color:var(--accent)}
+.hero-stats{display:flex;gap:40px;justify-content:center;margin-top:48px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:30px;font-weight:900;background:linear-gradient(135deg,#FF8C00,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:"Inter",sans-serif}
+.hero-stat .lbl{font-size:12px;color:var(--text3);margin-top:4px;letter-spacing:1px}
+.hero-cta{margin-top:32px;animation:fadeInUp .6s ease}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#000;border-radius:12px;padding:11px 28px;font-weight:800;font-size:14px;border:none;cursor:pointer;transition:all .2s}
+.hero-cta-btn:hover{background:var(--accent2)}
+.section{padding:60px 48px;max-width:1100px;margin:0 auto}
+.section-label{font-size:10px;font-weight:800;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;text-align:center}
+.section-title{font-size:clamp(24px,3vw,36px);font-weight:900;margin-bottom:10px;text-align:center;letter-spacing:-0.5px}
+.section-sub{color:var(--text2);font-size:14px;text-align:center;max-width:500px;margin:0 auto 36px;line-height:1.7}
+.gb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.gb-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .3s;cursor:pointer;position:relative}
+.gb-card:hover{border-color:rgba(255,140,0,0.35);transform:translateY(-3px);box-shadow:0 16px 32px rgba(0,0,0,0.3)}
+.gb-card.closed{opacity:0.5;pointer-events:none}
+.gb-card.almost-full{border-color:rgba(255,77,77,0.4)}
+.gb-card.almost-full::before{content:"🔥 即将满团";position:absolute;top:10px;right:10px;font-size:9px;font-weight:800;padding:3px 8px;border-radius:100px;background:var(--red);color:#fff;z-index:2}
+.gb-img{height:160px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#0d0d1a,#1a1a30)}
+.gb-badge{position:absolute;top:10px;left:10px;font-size:9px;font-weight:800;padding:2px 8px;border-radius:100px;background:var(--accent);color:#000;z-index:2}
+.gb-badge.urgent{background:var(--red);color:#fff}
+.gb-progress{margin:0 14px 10px;background:var(--bg4);height:5px;border-radius:3px;overflow:hidden}
+.gb-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#FFD700);border-radius:3px;transition:width 1s}
+.gb-progress-fill.danger{background:linear-gradient(90deg,var(--red),#FF8C00)}
+.gb-body{padding:14px}
+.gb-name{font-size:14px;font-weight:800;margin-bottom:5px;line-height:1.3}
+.gb-spec{font-size:11px;color:var(--text2);margin-bottom:10px;line-height:1.4}
+.gb-prices{display:flex;align-items:baseline;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.gb-price{font-size:20px;font-weight:900;color:var(--accent);font-family:"Inter",sans-serif}
+.gb-price-old{font-size:12px;color:var(--text3);text-decoration:line-through}
+.gb-discount{font-size:10px;font-weight:800;background:rgba(0,200,83,0.12);color:#00C853;padding:2px 6px;border-radius:5px}
+.gb-meta{font-size:11px;color:var(--text2);margin-bottom:4px}
+.gb-meta strong{color:var(--text)}
+.gb-countdown{font-size:11px;color:var(--text3);margin-bottom:10px}
+.gb-countdown .cd{font-weight:800;color:var(--accent);font-family:"Inter",sans-serif}
+.gb-btn{display:block;width:100%;padding:9px;text-align:center;background:var(--accent);color:#000;font-weight:800;font-size:12px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;font-family:inherit}
+.gb-btn:hover{background:var(--accent2)}
+.gb-btn.almost-btn{background:var(--red);color:#fff}
+.gb-btn.almost-btn:hover{background:#FF6666}
+.cat-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+.cat-btn{padding:7px 18px;border-radius:100px;font-size:12px;font-weight:700;background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .2s}
+.cat-btn:hover,.cat-btn.active{background:var(--accent3);border-color:var(--accent);color:var(--accent)}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}
+.how-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-align:center;transition:all .3s}
+.how-card:hover{border-color:rgba(255,140,0,0.2)}
+.how-icon{font-size:36px;margin-bottom:12px}
+.how-card h3{font-size:15px;font-weight:800;margin-bottom:8px}
+.how-card p{font-size:12px;color:var(--text2);line-height:1.7}
+.config-section{padding:60px 48px;background:var(--bg2)}
+.config-wrapper{max-width:900px;margin:0 auto}
+.config-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;margin-top:28px}
+.config-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.config-header{padding:16px 20px;border-bottom:1px solid var(--border);font-size:13px;font-weight:800}
+.config-body{padding:16px 20px}
+.cfg-group{margin-bottom:20px}
+.cfg-group:last-child{margin-bottom:0}
+.cfg-label{display:block;font-size:11px;font-weight:800;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.cfg-options{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.cfg-option{padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;font-size:12px}
+.cfg-option:hover{border-color:rgba(255,140,0,0.3)}
+.cfg-option.selected{border-color:var(--accent);background:var(--accent3)}
+.cfg-option .opt-name{font-weight:700;margin-bottom:2px}
+.cfg-option .opt-spec{font-size:10px;color:var(--text3)}
+.cfg-option .opt-price{font-size:12px;font-weight:800;color:var(--accent);margin-top:4px}
+.summary-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;position:sticky;top:80px}
+.summary-header{padding:16px 20px;border-bottom:1px solid var(--border);font-size:13px;font-weight:800;display:flex;align-items:center;gap:8px}
+.summary-body{padding:16px 20px}
+.summary-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.summary-row:last-of-type{border-bottom:none}
+.summary-row .s-label{color:var(--text2)}
+.summary-row .s-price{color:var(--accent);font-weight:800}
+.summary-total{padding:14px 16px;background:var(--bg4);display:flex;align-items:center;justify-content:space-between;border-radius:12px;margin-top:12px;font-size:15px;font-weight:800}
+.summary-total .amount{font-size:22px;background:linear-gradient(135deg,#FF8C00,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:"Inter",sans-serif}
+.tier-selector{margin-top:14px}
+.tier-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tier-option{padding:10px 8px;text-align:center;background:var(--bg3);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s}
+.tier-option:hover{border-color:rgba(255,140,0,0.3)}
+.tier-option.selected{border-color:var(--accent);background:var(--accent3)}
+.tier-option .tier-qty{font-size:13px;font-weight:900;color:var(--accent)}
+.tier-option .tier-pct{font-size:10px;color:var(--text3);margin-top:2px}
+.cta-area{margin-top:16px}
+.cta-btn{display:block;width:100%;padding:14px;text-align:center;background:var(--accent);color:#000;font-weight:900;font-size:15px;border-radius:12px;border:none;cursor:pointer;transition:all .2s;font-family:inherit}
+.cta-btn:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,140,0,0.3)}
+.cta-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.cta-secondary{width:100%;margin-top:8px;padding:12px;text-align:center;background:transparent;border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:700;border-radius:10px;cursor:pointer;transition:all .2s;font-family:inherit}
+.cta-secondary:hover{background:var(--bg3);color:var(--text)}
+.irr-section{margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.irr-title{font-size:12px;font-weight:800;margin-bottom:10px}
+.irr-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:inherit;margin-bottom:8px}
+.irr-input:focus{outline:none;border-color:var(--accent)}
+.irr-result{margin-top:8px;padding:12px;background:var(--bg3);border-radius:10px;text-align:center;display:none}
+.irr-result.show{display:block}
+.irr-result .irr-pct{font-size:24px;font-weight:900;color:var(--accent);font-family:"Inter",sans-serif}
+.irr-result .irr-note{font-size:11px;color:var(--text2);margin-top:4px}
+.irr-btn{width:100%;margin-top:8px;padding:9px;background:var(--bg4);border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:700;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .2s}
+.irr-btn:hover{border-color:var(--accent);color:var(--accent)}
+.faq-section{padding:60px 48px;background:var(--bg2)}
+.faq-wrapper{max-width:700px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border);padding:16px 0;cursor:pointer}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:14px;font-weight:800}
+.faq-q::after{content:"+";font-size:18px;color:var(--accent);flex-shrink:0;transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{font-size:13px;color:var(--text2);line-height:1.8;padding:8px 0}
+.faq-item.open .faq-a{max-height:150px}
+.partner-section{padding:60px 48px}
+.partner-wrapper{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.partner-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;transition:all .3s}
+.partner-card:hover{border-color:rgba(255,140,0,0.25)}
+.partner-icon{font-size:32px;margin-bottom:12px}
+.partner-card h3{font-size:16px;font-weight:800;margin-bottom:8px}
+.partner-card p{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:16px}
+.partner-card a{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;background:var(--accent);color:#000;font-weight:800;font-size:13px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;transition:all .2s}
+.partner-card a:hover{background:var(--accent2)}
+.partner-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.benefit-item{text-align:center;padding:12px;background:var(--bg4);border-radius:10px;flex:1;min-width:70px}
+.benefit-item .b-num{font-size:18px;font-weight:900;color:var(--accent);font-family:"Inter",sans-serif}
+.benefit-item .b-lbl{font-size:10px;color:var(--text3);margin-top:2px}
+footer{border-top:1px solid var(--border);padding:48px;background:var(--bg2)}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px}
+.footer-brand p{font-size:12px;color:var(--text2);margin-top:10px;line-height:1.7}
+.footer-col h4{font-size:10px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-col ul li a{font-size:12px;color:var(--text2);transition:color .2s}
+.footer-col ul li a:hover{color:var(--accent)}
+.footer-bottom{max-width:1100px;margin:36px auto 0;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;color:var(--text3);flex-wrap:wrap;gap:8px}
+.footer-bottom a{color:var(--accent)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:24px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto}
+.modal-header{padding:24px 28px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.modal-title{font-size:20px;font-weight:900;margin-bottom:4px}
+.modal-close{font-size:22px;color:var(--text3);cursor:pointer;flex-shrink:0;line-height:1;padding:4px}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:20px 28px 28px}
+.modal-price{font-size:32px;font-weight:900;color:var(--accent);font-family:"Inter",sans-serif;margin-bottom:16px}
+.modal-spec{display:flex;gap:16px;margin-bottom:16px;font-size:12px;color:var(--text2);flex-wrap:wrap}
+.modal-countdown{padding:12px;background:var(--bg3);border-radius:10px;font-size:12px;color:var(--text2);margin-bottom:16px}
+.modal-countdown .cd{font-weight:800;color:var(--accent)}
+.modal-join-bar{margin-bottom:16px}
+.modal-join-header{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px;color:var(--text2)}
+.modal-join-fill{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.modal-join-fill div{height:100%;background:linear-gradient(90deg,var(--accent),#FFD700);border-radius:3px;transition:width 1s}
+.form-section{margin-bottom:16px}
+.form-section h4{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.form-group{margin-bottom:10px}
+.form-label{display:block;font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;margin-bottom:6px}
+.form-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--text);font-family:inherit}
+.form-input:focus{outline:none;border-color:var(--accent)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-success{padding:14px;background:rgba(0,200,83,0.1);border:1px solid rgba(0,200,83,0.3);border-radius:10px;text-align:center;color:#00C853;font-weight:700;font-size:13px;margin-bottom:12px;display:none}
+.modal-actions{display:flex;gap:10px}
+.modal-join-btn{flex:1;padding:13px;background:var(--accent);color:#000;font-weight:800;font-size:14px;border:none;border-radius:12px;cursor:pointer;font-family:inherit;transition:all .2s}
+.modal-join-btn:hover{background:var(--accent2)}
+.modal-open-btn{flex:1;padding:13px;background:transparent;border:1px solid var(--border);color:var(--text2);font-weight:800;font-size:14px;border-radius:12px;cursor:pointer;font-family:inherit;transition:all .2s}
+.modal-open-btn:hover{background:var(--bg3);color:var(--text)}
+.loading-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:900px){.config-grid{grid-template-columns:1fr}.summary-card{position:static}}
+@media(max-width:768px){
+  nav,.hero,.section,.config-section,.faq-section,.partner-section,footer{padding-left:20px;padding-right:20px}
+  .gb-grid{grid-template-columns:repeat(2,1fr)}
+  .how-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .hero-stats{gap:16px}
+  .partner-wrapper{grid-template-columns:1fr}
+  .cfg-options{grid-template-columns:1fr}
+  .tier-options{grid-template-columns:repeat(3,1fr)}
+  .form-row{grid-template-columns:1fr}
+}
+
+/* Loading skeleton */
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+.skeleton-card{height:320px;border-radius:16px;margin-bottom:0}
+/* Card hover micro-animation */
+.gb-card{transition:all .3s cubic-bezier(0.34,1.56,0.64,1)}
+.gb-card:hover{transform:translateY(-5px) scale(1.01)}
+/* Hero stat counter animation */
+@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero-stat{animation:countUp .6s ease both}
+.hero-stat:nth-child(2){animation-delay:.1s}
+.hero-stat:nth-child(3){animation-delay:.2s}
+.hero-stat:nth-child(4){animation-delay:.3s}
+/* Config option hover enhancement */
+.cfg-option{transition:all .2s cubic-bezier(0.34,1.56,0.64,1)}
+.cfg-option:hover{transform:scale(1.02);border-color:rgba(255,140,0,0.5)}
+.cfg-option.selected{transform:scale(1.03);box-shadow:0 4px 16px rgba(255,140,0,0.2)}
+/* Tier option animation */
+.tier-option{transition:all .2s cubic-bezier(0.34,1.56,0.64,1)}
+.tier-option:hover{transform:scale(1.03)}
+.tier-option.selected{transform:scale(1.05);box-shadow:0 4px 16px rgba(255,140,0,0.25)}
+/* FAQ accordion animation */
+.faq-a{transition:max-height .35s cubic-bezier(0.4,0,0.2,1),opacity .3s ease}
+.faq-item.open .faq-a-inner{animation:fadeInUp .3s ease}
+/* Modal entrance animation */
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal{animation:modalIn .3s cubic-bezier(0.34,1.56,0.64,1)}
+/* Summary price animation */
+@keyframes priceFlash{0%{color:var(--accent)}50%{color:#FFD700}100%{color:var(--accent)}}
+.price-updated{animation:priceFlash .4s ease}
+/* Nav link underline animation */
+.nav-links a{position:relative;overflow:hidden}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .2s ease}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+/* CTA button pulse */
+@keyframes ctaPulse{0%,100%{box-shadow:0 8px 24px rgba(255,140,0,0.3)}50%{box-shadow:0 8px 32px rgba(255,140,0,0.5)}}
+.cta-btn{animation:ctaPulse 3s ease-in-out infinite}
+.cta-btn:hover{animation:none}
+
+
+.apply-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;background:var(--accent);color:#000;font-weight:800;font-size:13px;border-radius:10px;border:none;cursor:pointer;transition:all .2s;font-family:inherit}
+.apply-btn:hover{background:var(--accent2);transform:translateY(-1px)}
+.form-section h4{font-size:11px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.form-section h4:not(:first-child){margin-top:16px}
+.form-select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--text);font-family:inherit;appearance:none}
+.form-select:focus{outline:none;border-color:var(--accent)}
+.form-success-popup{padding:14px;background:rgba(0,200,83,0.1);border:1px solid rgba(0,200,83,0.3);border-radius:10px;text-align:center;color:#00C853;font-weight:700;font-size:13px;margin-bottom:12px;display:none}
+
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo"><span class="ic">◉</span> Solaripple<span class="sub">GroupBuy</span></div>
+  <div class="nav-links">
+    <a href="#products" class="active" data-section="products">精选拼团</a>
+    <a href="#configurator" data-section="configurator">配置器</a>
+    <a href="#faq" data-section="faq">常见问题</a>
+    <a href="#partner" data-section="partner">服务商入驻</a>
+  </div>
+  <div class="nav-right">
+    <span id="nav-user-area"><button class="nav-home" onclick="showLoginModal()">登录 / 注册</button></span>
+    <a href="https://solaripple.com" class="nav-home">← 首页</a>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-badge">◉ 工商业光储 · 拼团省15-25%</div>
+  <h1><span class="line1">工商业储能 </span><br><span class="line2">一起买 更便宜</span></h1>
+  <p class="hero-sub">3台成团享15%折扣，5台20%，10台25%。选型配置，IRR智能测算，零门槛参与。</p>
+  <div class="hero-actions">
+    <a href="#configurator" class="btn-primary" data-section="configurator">⚡ 立即配置</a>
+    <a href="#products" class="btn-ghost" data-section="products">📦 查看在拼</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">156+</div><div class="lbl">已拼成团</div></div>
+    <div class="hero-stat"><div class="num">¥2800万</div><div class="lbl">累计成交</div></div>
+    <div class="hero-stat"><div class="num">23省</div><div class="lbl">覆盖地区</div></div>
+    <div class="hero-stat"><div class="num">4.2年</div><div class="lbl">平均回收期</div></div>
+  </div>
+  <div class="hero-cta">
+    <a href="#products" class="hero-cta-btn" data-section="products">👥 已有4个团正在拼单，立即参与 →</a>
+  </div>
+</section>
+
+<div style="padding:0 48px;max-width:1100px;margin:0 auto">
+  <div class="cat-bar">
+    <button class="cat-btn active" data-cat="all">全部 <span class="cat-count"></span></button>
+    <button class="cat-btn" data-cat="100kWh">100kWh级</button>
+    <button class="cat-btn" data-cat="200kWh">200kWh级</button>
+    <button class="cat-btn" data-cat="500kWh">500kWh级</button>
+    <button class="cat-btn" data-cat="PCS">PCS单独</button>
+  </div>
+</div>
+
+<section class="section" id="products">
+  <div class="section-label">Group Buy Products</div>
+  <div class="section-title">正在拼团</div>
+  <p class="section-sub">3台成团，凑满人数自动生效，48小时退款保障</p>
+  <div class="gb-grid" id="gb-grid">
+<!-- Hardcoded defaults shown immediately; JS will overwrite with live API data -->
+<div class="gb-card" onclick="openModal('p1')"><div class="gb-img"><span class="gb-badge">热门</span><div style="font-size:44px;opacity:0.8">🔋</div></div><div class="gb-progress"><div class="gb-progress-fill" style="width:70%"></div></div><div class="gb-body"><div class="gb-name">Ripple 100kWh 工商光储系统</div><div class="gb-spec">PCS 50kW + Bat 100kWh + 7kW充电桩×2</div><div class="gb-prices"><span class="gb-price">¥11.7万</span><span class="gb-price-old">¥16.5万</span><span class="gb-discount">-10%</span></div><div class="gb-meta">已报名 <strong>7</strong> 人 · 目标10人</div><div class="gb-countdown">⏰ <span class="cd">14天 8时</span> 后结束</div><button class="gb-btn" onclick="event.stopPropagation();openModal('p1')">参与拼团</button></div></div>
+<div class="gb-card almost-full" onclick="openModal('p2')"><div class="gb-img"><span class="gb-badge urgent">🔥</span><div style="font-size:44px;opacity:0.8">🔋</div></div><div class="gb-progress"><div class="gb-progress-fill danger" style="width:80%"></div></div><div class="gb-body"><div class="gb-name">Ripple 200kWh 工商光储系统</div><div class="gb-spec">PCS 100kW + Bat 200kWh + 21kW充电桩×2</div><div class="gb-prices"><span class="gb-price">¥20.7万</span><span class="gb-price-old">¥31万</span><span class="gb-discount">-15%</span></div><div class="gb-meta">已报名 <strong>4</strong> 人 · 目标5人</div><div class="gb-countdown">⏰ <span class="cd">21天 3时</span> 后结束</div><button class="gb-btn almost-btn" onclick="event.stopPropagation();openModal('p2')">🔥 立即抢购</button></div></div>
+<div class="gb-card" onclick="openModal('p3')"><div class="gb-img"><span class="gb-badge">特惠</span><div style="font-size:44px;opacity:0.8">🔋</div></div><div class="gb-progress"><div class="gb-progress-fill" style="width:40%"></div></div><div class="gb-body"><div class="gb-name">Ripple 500kWh 工商光储系统</div><div class="gb-spec">PCS 200kW + Bat 500kWh + 60kW充电桩×1</div><div class="gb-prices"><span class="gb-price">¥41.2万</span><span class="gb-price-old">¥61.5万</span><span class="gb-discount">-20%</span></div><div class="gb-meta">已报名 <strong>2</strong> 人 · 目标5人</div><div class="gb-countdown">⏰ <span class="cd">28天 12时</span> 后结束</div><button class="gb-btn" onclick="event.stopPropagation();openModal('p3')">参与拼团</button></div></div>
+<div class="gb-card" onclick="openModal('p4')"><div class="gb-img"><span class="gb-badge">精选</span><div style="font-size:44px;opacity:0.8">⚡</div></div><div class="gb-progress"><div class="gb-progress-fill" style="width:30%"></div></div><div class="gb-body"><div class="gb-name">PCS 100kW 功率模块</div><div class="gb-spec">三相逆变器 · MPPT×4 · 并网/离网</div><div class="gb-prices"><span class="gb-price">¥7万</span><span class="gb-price-old">¥7.8万</span><span class="gb-discount">-10%</span></div><div class="gb-meta">已报名 <strong>3</strong> 人 · 目标10人</div><div class="gb-countdown">⏰ <span class="cd">7天 5时</span> 后结束</div><button class="gb-btn" onclick="event.stopPropagation();openModal('p4')">参与拼团</button></div></div>
+</div>
+</section>
+
+<section class="section" id="how">
+  <div class="section-label">How It Works</div>
+  <div class="section-title">三步参与拼团</div>
+  <div class="how-grid">
+    <div class="how-card"><div class="how-icon">⚡</div><h3>① 配置系统</h3><p>选择PCS功率、电池容量、充电桩数量，实时生成报价单和IRR测算结果。</p></div>
+    <div class="how-card"><div class="how-icon">👥</div><h3>② 加入拼团</h3><p>选择拼团规模（3台/5台/10台），凑满人数自动生效，48小时退款保障。</p></div>
+    <div class="how-card"><div class="how-icon">📈</div><h3>③ 锁定收益</h3><p>拼团成功享受折扣价，EnOS系统接入，实时监控收益，支持微信/支付宝。</p></div>
+  </div>
+</section>
+
+<section class="config-section" id="configurator">
+  <div class="config-wrapper">
+    <div style="text-align:center;margin-bottom:8px">
+      <div class="section-label">3D System Configurator</div>
+      <div class="section-title">配置我的储能系统</div>
+      <p class="section-sub" style="margin-bottom:0">选择组件规格，实时生成报价，IRR自动测算</p>
+    </div>
+    <div class="config-grid">
+      <div class="config-card">
+        <div class="config-header">📦 选择配置</div>
+        <div class="config-body">
+          <div class="cfg-group">
+            <span class="cfg-label">⚡ PCS 功率模块</span>
+            <div class="cfg-options" id="pcs-options">
+              <div class="cfg-option selected" data-type="pcs" data-id="pcs-50" data-price="42000" data-name="PCS 50kW" onclick="selectOpt(this)"><div class="opt-name">PCS 50kW</div><div class="opt-spec">三相逆变 · MPPT×2</div><div class="opt-price">¥4.2万</div></div>
+              <div class="cfg-option" data-type="pcs" data-id="pcs-100" data-price="78000" data-name="PCS 100kW" onclick="selectOpt(this)"><div class="opt-name">PCS 100kW</div><div class="opt-spec">三相逆变 · MPPT×4</div><div class="opt-price">¥7.8万</div></div>
+              <div class="cfg-option" data-type="pcs" data-id="pcs-200" data-price="135000" data-name="PCS 200kW" onclick="selectOpt(this)"><div class="opt-name">PCS 200kW</div><div class="opt-spec">三相逆变 · 并网/离网</div><div class="opt-price">¥13.5万</div></div>
+              <div class="cfg-option" data-type="pcs" data-id="pcs-500" data-price="220000" data-name="PCS 500kW" onclick="selectOpt(this)"><div class="opt-name">PCS 500kW</div><div class="opt-spec">大型储能 · 1MW级</div><div class="opt-price">¥22万</div></div>
+            </div>
+          </div>
+          <div class="cfg-group">
+            <span class="cfg-label">🔋 电池容量</span>
+            <div class="cfg-options" id="bat-options">
+              <div class="cfg-option selected" data-type="battery" data-id="bat-100" data-price="88000" data-name="Bat 100kWh" onclick="selectOpt(this)"><div class="opt-name">100kWh</div><div class="opt-spec">LFP · Mini</div><div class="opt-price">¥8.8万</div></div>
+              <div class="cfg-option" data-type="battery" data-id="bat-200" data-price="165000" data-name="Bat 200kWh" onclick="selectOpt(this)"><div class="opt-name">200kWh</div><div class="opt-spec">LFP · Pro</div><div class="opt-price">¥16.5万</div></div>
+              <div class="cfg-option" data-type="battery" data-id="bat-500" data-price="380000" data-name="Bat 500kWh" onclick="selectOpt(this)"><div class="opt-name">500kWh</div><div class="opt-spec">LFP · Max</div><div class="opt-price">¥38万</div></div>
+              <div class="cfg-option" data-type="battery" data-id="bat-1000" data-price="720000" data-name="Bat 1000kWh" onclick="selectOpt(this)"><div class="opt-name">1000kWh</div><div class="opt-spec">LFP · 超大型</div><div class="opt-price">¥72万</div></div>
+            </div>
+          </div>
+          <div class="cfg-group">
+            <span class="cfg-label">⚙️ 充电桩（选配）</span>
+            <div class="cfg-options" id="ev-options">
+              <div class="cfg-option selected" data-type="ev" data-id="none" data-price="0" data-name="无充电桩" onclick="selectOpt(this)"><div class="opt-name">无充电桩</div><div class="opt-spec">纯储能系统</div><div class="opt-price">—</div></div>
+              <div class="cfg-option" data-type="ev" data-id="ev-7" data-price="12000" data-name="EV 7kW" onclick="selectOpt(this)"><div class="opt-name">7kW 慢充</div><div class="opt-spec">壁挂式</div><div class="opt-price">¥1.2万</div></div>
+              <div class="cfg-option" data-type="ev" data-id="ev-21" data-price="28000" data-name="EV 21kW" onclick="selectOpt(this)"><div class="opt-name">21kW 快充</div><div class="opt-spec">三相直流</div><div class="opt-price">¥2.8万</div></div>
+              <div class="cfg-option" data-type="ev" data-id="ev-60" data-price="85000" data-name="EV 60kW" onclick="selectOpt(this)"><div class="opt-name">60kW 快充</div><div class="opt-spec">商用快充桩</div><div class="opt-price">¥8.5万</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-header">📋 配置清单</div>
+        <div class="summary-body">
+          <div id="summary-items">
+            <div class="summary-row"><span class="s-label">PCS 50kW</span><span class="s-price">¥42,000</span></div>
+            <div class="summary-row"><span class="s-label">Bat 100kWh</span><span class="s-price">¥88,000</span></div>
+          </div>
+          <div class="summary-total"><span>标准总价</span><span class="amount" id="totalPrice">¥130,000</span></div>
+          <div class="tier-selector">
+            <span class="cfg-label">选择成团规模</span>
+            <div class="tier-options" id="tier-options">
+              <div class="tier-option selected" data-qty="3" data-rate="0.90" onclick="selectTier(this)"><div class="tier-qty">3台</div><div class="tier-pct">-10%</div></div>
+              <div class="tier-option" data-qty="5" data-rate="0.85" onclick="selectTier(this)"><div class="tier-qty">5台</div><div class="tier-pct">-15%</div></div>
+              <div class="tier-option" data-qty="10" data-rate="0.80" onclick="selectTier(this)"><div class="tier-qty">10台</div><div class="tier-pct">-20%</div></div>
+            </div>
+          </div>
+          <div class="summary-total" style="margin-top:10px"><span>拼团价</span><span class="amount" id="tierPrice">¥117,000</span></div>
+          <div class="cta-area">
+            <button class="cta-btn" onclick="startGroupBuy()" id="cta-btn">👥 发起拼团</button>
+            <button class="cta-secondary" onclick="joinGroup()">加入已有团 →</button>
+          </div>
+          <div class="irr-section">
+            <div class="irr-title">📊 IRR 快速测算</div>
+            <input class="irr-input" type="number" id="irr-elec" placeholder="尖峰电价 (元/kWh)" value="1.2">
+            <input class="irr-input" type="number" id="irr-valley" placeholder="谷时电价 (元/kWh)" value="0.35">
+            <input class="irr-input" type="number" id="irr-kwh" placeholder="日均充放 kWh" value="200">
+            <button class="irr-btn" onclick="calcIRR()">测算 IRR</button>
+            <div class="irr-result" id="irr-result">
+              <div class="irr-pct" id="irr-pct">—</div>
+              <div class="irr-note" id="irr-note">回收期：—年</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="faq-wrapper">
+    <div class="section-label">FAQ</div>
+    <div class="section-title">常见问题</div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">拼团成功后，多久能并网？</div><div class="faq-a"><div class="faq-a-inner">从拼团成功到并网，一般需要2-4周。具体流程：付清尾款 → 安排发货 → 安装施工 → 供电局并网验收。大型项目（500kWh以上）周期约4-8周。</div></div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">设备有质保吗？</div><div class="faq-a"><div class="faq-a-inner">PCS 质保10年，电池簇质保5年或循环6000次（以先到为准）。质保期内非人为故障免费更换。</div></div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">拼团不成功能退款吗？</div><div class="faq-a"><div class="faq-a-inner">当然可以。48小时内未凑齐最低人数（3台），全额退款；若凑齐后项目取消，扣除银行手续费后退还剩余款项。</div></div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">IRR是怎么测算的？</div><div class="faq-a"><div class="faq-a-inner">基于峰谷套利模型：日收益 = kWh × (尖峰电价 - 谷时电价) × 365天，年净收益 = 年收益 - 5%运维费，IRR = 年净收益/设备总价。</div></div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">中小企业能贷款买储能吗？</div><div class="faq-a"><div class="faq-a-inner">支持EMC合作模式（能源管理合同）：您无需前期投入，我们投资建设，按月收取节能收益分成。部分银行提供绿色信贷，利率3.85%-5.6%，最长期限5年。</div></div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">如何成为安装服务商？</div><div class="faq-a"><div class="faq-a-inner">提交企业资质（电力工程资质、安全生产许可证）。审核通过后获授权安装商资格，享受设备折扣和安装佣金。已有全国200+合作安装商。</div></div></div>
+  </div>
+</section>
+
+<section class="partner-section" id="partner">
+  <div class="partner-wrapper">
+    <div class="partner-card">
+      <div class="partner-icon">🏗️</div>
+      <h3>安装服务商入驻</h3>
+      <p>拥有电力工程资质？欢迎加入安装服务商网络，享受设备折扣和订单佣金。</p>
+      <button class="apply-btn" onclick="showPartnerModal()">📋 提交入驻申请</button>
+      <div class="partner-btns">
+        <div class="benefit-item"><div class="b-num">15%</div><div class="b-lbl">设备折扣</div></div>
+        <div class="benefit-item"><div class="b-num">¥5000</div><div class="b-lbl">单台佣金</div></div>
+        <div class="benefit-item"><div class="b-num">200+</div><div class="b-lbl">合作安装商</div></div>
+      </div>
+    </div>
+    <div class="partner-card">
+      <div class="partner-icon">🤝</div>
+      <h3>EMC合作 / 投资方</h3>
+      <p>EMC能源管理合同，设备租赁、联合投资多种模式灵活选择，零投入享节能收益分成。</p>
+      <button class="apply-btn" onclick="showInvestorModal()">📧 联系投资团队</button>
+      <div class="partner-btns">
+        <div class="benefit-item"><div class="b-num">零投入</div><div class="b-lbl">EMC模式</div></div>
+        <div class="benefit-item"><div class="b-num">5.2%</div><div class="b-lbl">预期年化</div></div>
+        <div class="benefit-item"><div class="b-num">15省</div><div class="b-lbl">已落地</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nav-logo" style="margin-bottom:10px"><span class="ic">◉</span> Solaripple <span class="sub">GroupBuy</span></div>
+      <p>光之涟漪旗下工商业光储团购平台 · AI驱动的储能系统配置与拼团购买平台</p>
+    </div>
+    <div class="footer-col"><h4>产品</h4><ul><li><a href="https://enos.solaripple.com">EnOS 数字孪生</a></li><li><a href="https://monitor.solaripple.com">RippleMonitor</a></li><li><a href="https://master.solaripple.com">RippleMaster</a></li><li><a href="https://ops.solaripple.com">Ops 运维平台</a></li></ul></div>
+    <div class="footer-col"><h4>服务</h4><ul><li><a href="#products" data-section="products">拼团产品</a></li><li><a href="#faq" data-section="faq">常见问题</a></li><li><a href="#partner" data-section="partner">服务商入驻</a></li><li><a href="#" onclick="showContactModal();return false">联系我们</a></li></ul></div>
+    <div class="footer-col"><h4>联系</h4><ul><li><a href="mailto:group@solaripple.com">group@solaripple.com</a></li><li><a href="https://solaripple.com">solaripple.com</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 光之涟漪 Solaripple · 构建更清洁的能源未来</span><span>Solaripple GroupBuy by <a href="https://solaripple.com">Solaripple</a></span></div>
+</footer>
+
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-title" id="loginTitle">登录 / 注册</div><div style="font-size:12px;color:var(--text2);margin-top:4px">参与拼团前请先登录</div></div>
+      <div class="modal-close" onclick="closeLoginModal()">×</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">
+        <div class="form-group">
+          <label class="form-label">手机号码</label>
+          <div style="display:flex;gap:8px">
+            <input id="login-phone" class="form-input" type="tel" placeholder="138-0000-0000" style="flex:1">
+            <button id="sendCodeBtn" class="cta-btn" style="width:110px;padding:10px 8px;font-size:12px" onclick="sendCode()">发送验证码</button>
+          </div>
+        </div>
+        <div class="form-group" id="codeGroup" style="display:none">
+          <label class="form-label">验证码</label>
+          <input id="login-code" class="form-input" type="text" placeholder="输入6位验证码" maxlength="6">
+        </div>
+        <div class="form-group" id="nameGroup" style="display:none">
+          <label class="form-label">您的称呼</label>
+          <input id="login-name" class="form-input" type="text" placeholder="张三（先生/女士）">
+        </div>
+        <div class="form-group" id="cityGroup" style="display:none">
+          <label class="form-label">所在城市</label>
+          <input id="login-city" class="form-input" type="text" placeholder="例：苏州、杭州">
+        </div>
+        <div id="login-error" style="color:var(--red);font-size:12px;margin-bottom:10px;display:none"></div>
+        <button id="login-btn" class="modal-join-btn" onclick="doLogin()" disabled style="margin-bottom:10px">请先获取验证码</button>
+        <div style="text-align:center;font-size:11px;color:var(--text3)">未注册用户将自动创建账号</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-title" id="modalTitle">—</div><div style="font-size:12px;color:var(--text2);margin-top:4px" id="modalSpec">—</div></div>
+      <div class="modal-close" onclick="closeModal()">×</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-price" id="modalPrice">¥—</div>
+      <div class="modal-spec" id="modalSpec2" style="margin-bottom:16px;font-size:12px;color:var(--text2)"></div>
+      <div class="modal-countdown">⏰ 拼团结束：<span class="cd" id="modalCountdown">—</span></div>
+      <div class="modal-join-bar">
+        <div class="modal-join-header"><span>已报名</span><span id="modalJoinCount">— / — 人</span></div>
+        <div class="modal-join-fill"><div id="modalJoinFill" style="width:0%"></div></div>
+      </div>
+      <div class="form-section">
+        <h4>选择成团规模</h4>
+        <div id="modalTiers" style="display:flex;flex-direction:column;gap:8px;margin-top:10px"></div>
+      </div>
+      <div class="form-section">
+        <h4>填写报名信息</h4>
+        <div class="form-group"><label class="form-label">您的称呼</label><input id="form-name" class="form-input" type="text" placeholder="张三（先生/女士）"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">手机号码</label><input id="form-phone" class="form-input" type="tel" placeholder="138-0000-0000"></div>
+          <div class="form-group"><label class="form-label">所在城市</label><input id="form-city" class="form-input" type="text" placeholder="苏州"></div>
+        </div>
+        <div class="form-group"><label class="form-label">需求数量（台）</label><input id="form-qty" class="form-input" type="number" value="1" min="1"></div>
+        <div id="form-success" class="form-success">✅ 报名成功！我们将在24小时内联系您确认拼团详情。</div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-join-btn" id="modalJoinBtn" onclick="doJoin()">👥 加入拼团</button>
+        <button class="modal-open-btn" onclick="doOpenGroup()">发起新团</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var PRODUCTS=[];
+var cfg={pcs:{id:"pcs-50",name:"PCS 50kW",price:42000},battery:{id:"bat-100",name:"Bat 100kWh",price:88000},ev:{id:"none",name:"无充电桩",price:0}};
+var currentTier={qty:3,rate:0.90};
+var isLoggedIn=false;
+var currentUser=null;
+var token=localStorage.getItem("gb_token")||null;
+var loginStep=0;
+var currentModalProduct=null;
+var currentModalTier=null;
+var cdInterval=null;
+
+function getHeaders(){return token?{"Authorization":"Bearer "+token,"Content-Type":"application/json"}:{"Content-Type":"application/json"};}
+
+async function api(path,opts){
+  try{
+    var r=await fetch(path,Object.assign({headers:getHeaders()},opts||{}));
+    var d=await r.json();
+    if(d.error&&(d.error.indexOf("登录")>=0||d.error.indexOf("token")>=0)){
+      logout();showLoginModal();return null;
+    }
+    return d;
+  }catch(e){return null;}
+}
+
+function initAuth(){
+  if(!token)return updateNav(null);
+  api("/api/auth/me").then(function(d){if(d&&d.ok){currentUser=d.user;isLoggedIn=true;updateNav(currentUser);}else{logout();}});
+}
+
+function updateNav(user){
+  var area=document.getElementById("nav-user-area");
+  if(user){
+    area.innerHTML='<div class="nav-user"><div class="avatar">'+user.name.charAt(0)+'</div><span>'+user.name+'</span></div>';
+  }else{
+    area.innerHTML='<button class="nav-home" onclick="showLoginModal()">登录 / 注册</button>';
+  }
+}
+
+function logout(){token=null;currentUser=null;isLoggedIn=false;localStorage.removeItem("gb_token");updateNav(null);}
+
+function showLoginModal(){document.getElementById("loginModal").classList.add("show");resetLoginForm();}
+function closeLoginModal(){document.getElementById("loginModal").classList.remove("show");}
+
+function resetLoginForm(){
+  loginStep=0;
+  document.getElementById("codeGroup").style.display="none";
+  document.getElementById("nameGroup").style.display="none";
+  document.getElementById("cityGroup").style.display="none";
+  document.getElementById("login-error").style.display="none";
+  document.getElementById("login-btn").disabled=true;
+  document.getElementById("login-btn").textContent="请先获取验证码";
+  document.getElementById("sendCodeBtn").disabled=false;
+  document.getElementById("sendCodeBtn").textContent="发送验证码";
+}
+
+function sendCode(){
+  var phone=document.getElementById("login-phone").value.trim();
+  if(!phone||phone.length<11){alert("请输入正确的手机号");return;}
+  var btn=document.getElementById("sendCodeBtn");
+  btn.disabled=true;btn.textContent="发送中...";
+  fetch("/api/auth/send_code",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:phone})})
+    .then(function(r){return r.json()})
+    .then(function(d){
+      btn.disabled=false;
+      if(d.ok){
+        loginStep=1;
+        document.getElementById("codeGroup").style.display="block";
+        document.getElementById("nameGroup").style.display="block";
+        document.getElementById("cityGroup").style.display="block";
+        document.getElementById("login-btn").disabled=false;
+        document.getElementById("login-btn").textContent="验证并登录";
+        document.getElementById("sendCodeBtn").textContent="已发送 ✓";
+        if(d.dev_mode)console.log("[DEV] code:",d.code);
+      }else{
+        var err=document.getElementById("login-error");
+        err.textContent=d.error||"发送失败";err.style.display="block";
+        btn.textContent="重新发送";
+      }
+    });
+}
+
+function doLogin(){
+  var phone=document.getElementById("login-phone").value.trim();
+  var code=document.getElementById("login-code").value.trim();
+  var name=document.getElementById("login-name").value.trim();
+  var city=document.getElementById("login-city").value.trim();
+  if(!code){alert("请输入验证码");return;}
+  var btn=document.getElementById("login-btn");
+  btn.disabled=true;btn.textContent="验证中...";
+  fetch("/api/auth/verify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:phone,code:code,name:name||phone,city:city||"未填写"})})
+    .then(function(r){return r.json()})
+    .then(function(d){
+      if(d.ok){
+        token=d.token;localStorage.setItem("gb_token",token);
+        currentUser={name:name||phone,phone:phone,city:city};isLoggedIn=true;
+        updateNav(currentUser);
+        btn.textContent="✓ 登录成功";
+        setTimeout(closeLoginModal,1200);
+      }else{
+        var err=document.getElementById("login-error");
+        err.textContent=d.error||"验证失败";err.style.display="block";
+        btn.disabled=false;btn.textContent="验证并登录";
+      }
+    });
+}
+
+function selectOpt(el){
+  var type=el.dataset.type;
+  document.querySelectorAll("#"+type+"-options .cfg-option").forEach(function(o){o.classList.remove("selected")});
+  el.classList.add("selected");
+  if(type==="pcs")cfg.pcs={id:el.dataset.id,name:el.dataset.name,price:parseInt(el.dataset.price)};
+  if(type==="battery")cfg.battery={id:el.dataset.id,name:el.dataset.name,price:parseInt(el.dataset.price)};
+  if(type==="ev")cfg.ev={id:el.dataset.id,name:el.dataset.name,price:parseInt(el.dataset.price)};
+  updateSummary();
+}
+
+function selectTier(el){
+  document.querySelectorAll(".tier-option").forEach(function(o){o.classList.remove("selected")});
+  el.classList.add("selected");
+  currentTier={qty:parseInt(el.dataset.qty),rate:parseFloat(el.dataset.rate)};
+  updateSummary();
+}
+
+function updateSummary(){
+  var items=document.getElementById("summary-items");
+  var rows="";
+  if(cfg.pcs)rows+='<div class="summary-row"><span class="s-label">'+cfg.pcs.name+'</span><span class="s-price">¥'+cfg.pcs.price.toLocaleString()+'</span></div>';
+  if(cfg.battery)rows+='<div class="summary-row"><span class="s-label">'+cfg.battery.name+'</span><span class="s-price">¥'+cfg.battery.price.toLocaleString()+'</span></div>';
+  if(cfg.ev&&cfg.ev.price>0)rows+='<div class="summary-row"><span class="s-label">'+cfg.ev.name+'</span><span class="s-price">¥'+cfg.ev.price.toLocaleString()+'</span></div>';
+  items.innerHTML=rows;
+  var total=(cfg.pcs?cfg.pcs.price:0)+(cfg.battery?cfg.battery.price:0)+(cfg.ev?cfg.ev.price:0);
+  document.getElementById("totalPrice").textContent="¥"+total.toLocaleString();
+  var tierPrice=Math.round(total*currentTier.rate);
+  document.getElementById("tierPrice").textContent="¥"+tierPrice.toLocaleString();
+}
+
+function fmtCd(ms){
+  if(ms<=0)return"已结束";
+  var d=Math.floor(ms/86400000),h=Math.floor((ms%86400000)/3600000),m=Math.floor((ms%3600000)/60000);
+  return(d>0?d+"天 ":"")+(h>0?h+"时 ":"")+(m>0?m+"分":"");
+}
+
+function buildCards(cat,serverGroups){
+  var grid=document.getElementById("gb-grid");
+  var prods=cat==="all"?PRODUCTS:PRODUCTS.filter(function(p){return p.category===cat});
+  if(!prods.length){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text2)">' +'<div style="font-size:48px;margin-bottom:16px">📦</div>' +'<div style="font-size:16px;font-weight:700;margin-bottom:8px">该分类暂无产品</div>' +'<div style="font-size:13px;color:var(--text3)">敬请期待更多配置方案</div></div>';
+    return;
+  }
+  var h="";
+  prods.forEach(function(p){
+    var sg=serverGroups&&serverGroups.find(function(g){return g.product_id===p.id});
+    var joined=sg?sg.joined:p.joined;
+    var target=sg?sg.target:p.target;
+    var status=sg?sg.status:"open";
+    var endTs=sg?sg.expires_at*1000:p.endTs;
+    var pct=Math.round(joined/target*100);
+    var tier0=p.tiers[0];
+    var almost=(joined>=target-1)&&status!=="closed";
+    var closed=status==="closed";
+    var endMs=endTs-Date.now();
+    var extraClass=closed?" closed":almost?" almost-full":"";
+    var badgeClass=p.badgeUrgent?" urgent":"";
+    var progressClass=almost?" danger":"";
+    var btnClass=closed?" closed-btn":almost?" almost-btn":"";
+    var btnText=closed?"已满团":almost?"🔥 立即抢购":"参与拼团";
+    h+='<div class="gb-card'+extraClass+'" onclick="openModal('+p.id+')">';
+    h+='<div class="gb-img"><span class="gb-badge'+badgeClass+'">'+(p.badgeUrgent?"🔥":p.badge)+'</span><div style="font-size:44px;opacity:0.8">'+(p.category==="PCS"?"⚡":"🔋")+'</div></div>';
+    h+='<div class="gb-progress"><div class="gb-progress-fill'+progressClass+'" style="width:'+pct+'%"></div></div>';
+    h+='<div class="gb-body"><div class="gb-name">'+p.name+'</div><div class="gb-spec">'+p.spec+'</div>';
+    h+='<div class="gb-prices"><span class="gb-price">¥'+(tier0?(tier0.price/10000).toFixed(0):0)+'万</span><span class="gb-price-old">¥'+(p.oldPrice/10000).toFixed(0)+'万</span><span class="gb-discount">-'+p.tiers[0].discount+'</span></div>';
+    h+='<div class="gb-meta">已报名 <strong>'+joined+'</strong> 人 · 目标'+target+'人</div>';
+    h+='<div class="gb-countdown">⏰ <span class="cd">'+fmtCd(endMs)+'</span> '+(closed?"已满团":endMs<=0?"已结束":"后结束")+'</div>';
+    h+='<button class="gb-btn'+(btnClass?" "+btnClass:"")+'" onclick="event.stopPropagation();openModal('+p.id+')">'+btnText+'</button>';
+    h+='</div></div>';
+  });
+  grid.innerHTML=h;
+}
+
+var productsLoaded=false;
+
+async function loadProducts(){
+  var d=await api("/api/products");
+  if(d&&d.products&&d.products.length){
+    PRODUCTS=d.products;
+    productsLoaded=true;
+  }
+  var gd=await api("/api/groups");
+  // Only rebuild cards if we got product data from API; otherwise keep hardcoded HTML
+  if(productsLoaded){
+    buildCards("all",(gd&&gd.ok)?gd.groups:[]);
+  }else if(gd&&gd.ok&&gd.groups&&gd.groups.length){
+    // Update join counts from server even without product data
+    buildCards("all",gd.groups);
+  }
+  updateCatCounts();
+  initAuth();
+}
+
+function openModal(id){
+  var p=PRODUCTS.find(function(x){return x.id===id});
+  // If PRODUCTS not loaded yet, use default product data
+  if(!p){
+    var defaults={p1:{name:"Ripple 100kWh 工商光储系统",spec:"PCS 50kW + Bat 100kWh",joined:7,target:10,endTs:Date.now()+1296000000,tiers:[{qty:3,discount:"10%",price:117000},{qty:5,discount:"15%",price:110500},{qty:10,discount:"20%",price:104000}]},
+                 p2:{name:"Ripple 200kWh 工商光储系统",spec:"PCS 100kW + Bat 200kWh",joined:4,target:5,endTs:Date.now()+1814400000,tiers:[{qty:3,discount:"10%",price:218700},{qty:5,discount:"15%",price:206550},{qty:10,discount:"20%",price:189000}]},
+                 p3:{name:"Ripple 500kWh 工商光储系统",spec:"PCS 200kW + Bat 500kWh",joined:2,target:5,endTs:Date.now()+2462400000,tiers:[{qty:3,discount:"10%",price:553500},{qty:5,discount:"15%",price:522750},{qty:10,discount:"20%",price:492000}]},
+                 p4:{name:"PCS 100kW 功率模块",spec:"三相逆变器 · MPPT×4",joined:3,target:10,endTs:Date.now()+626400000,tiers:[{qty:3,discount:"10%",price:70200},{qty:5,discount:"15%",price:66300},{qty:10,discount:"20%",price:62400}]}};
+    p=defaults[id];
+    if(!p)return;
+  }
+  currentModalProduct=p;
+  currentModalTier={qty:p.tiers[0].qty,rate:1-parseInt(p.tiers[0].discount)/100,price:p.tiers[0].price};
+  document.getElementById("modalTitle").textContent=p.name;
+  document.getElementById("modalSpec").textContent=p.spec;
+  document.getElementById("modalPrice").textContent="¥"+(p.tiers[0].price/10000).toFixed(0)+"万起";
+  document.getElementById("modalJoinCount").textContent=p.joined+" / "+p.target+" 人";
+  document.getElementById("modalJoinFill").style.width=Math.round(p.joined/p.target*100)+"%";
+  var tH="";
+  p.tiers.forEach(function(t,i){
+    var sel=i===0?" selected":"";
+    tH+='<div class="cfg-option'+sel+'" style="display:flex;align-items:center;justify-content:space-between;padding:12px" data-qty="'+t.qty+'" data-rate="'+(1-parseInt(t.discount)/100)+'" data-price="'+t.price+'" onclick="selectModalTier(this)">';
+    tH+='<div><div style="font-weight:700">'+t.qty+'台成团</div><div style="font-size:11px;color:var(--text3)">¥'+(t.price/10000).toFixed(0)+'万/台</div></div>';
+    tH+='<div style="text-align:right"><div style="font-size:16px;font-weight:700;color:var(--accent)">¥'+(t.price/10000).toFixed(0)+'万</div><div style="font-size:10px;color:#00C853">-'+t.discount+'</div></div>';
+    tH+='</div>';
+  });
+  document.getElementById("modalTiers").innerHTML=tH;
+  document.getElementById("form-success").style.display="none";
+  document.querySelectorAll("#detailModal input").forEach(function(i){i.value=""});
+  document.getElementById("detailModal").classList.add("show");
+  if(cdInterval)clearInterval(cdInterval);
+  function upd(){document.getElementById("modalCountdown").textContent=fmtCd(p.endTs-Date.now());}
+  upd();cdInterval=setInterval(upd,60000);
+}
+
+function selectModalTier(el){
+  document.querySelectorAll("#modalTiers .cfg-option").forEach(function(o){o.classList.remove("selected")});
+  el.classList.add("selected");
+  currentModalTier={qty:parseInt(el.dataset.qty),rate:parseFloat(el.dataset.rate),price:parseInt(el.dataset.price)};
+  document.getElementById("modalPrice").textContent="¥"+(parseInt(el.dataset.price)/10000).toFixed(0)+"万起";
+}
+
+function closeModal(){document.getElementById("detailModal").classList.remove("show");if(cdInterval)clearInterval(cdInterval);}
+
+async function doJoin(){
+  if(!isLoggedIn){closeModal();showLoginModal();return;}
+  var name=document.getElementById("form-name").value.trim()||currentUser.name;
+  var phone=document.getElementById("form-phone").value.trim()||currentUser.phone;
+  var city=document.getElementById("form-city").value.trim()||currentUser.city;
+  var qty=parseInt(document.getElementById("form-qty").value)||1;
+  if(!name||!phone){alert("请填写完整信息");return;}
+  var btn=document.getElementById("modalJoinBtn");
+  btn.disabled=true;btn.textContent="提交中...";
+  var d=await api("/api/groups",{method:"POST",body:JSON.stringify({product_id:currentModalProduct.id,tier_qty:currentModalTier.qty,tier_price:currentModalTier.price})});
+  btn.disabled=false;btn.textContent="👥 加入拼团";
+  if(d&&d.ok){
+    document.getElementById("form-success").style.display="block";
+    setTimeout(function(){closeModal();loadProducts();},1800);
+  }else if(d===null){}
+  else{alert((d&&d.error?"错误："+d.error:"提交失败"));}
+}
+
+function doOpenGroup(){closeModal();document.getElementById("configurator").scrollIntoView({behavior:"smooth"});}
+
+async function startGroupBuy(){
+  if(!isLoggedIn){showLoginModal();return;}
+  var total=(cfg.pcs?cfg.pcs.price:0)+(cfg.battery?cfg.battery.price:0)+(cfg.ev?cfg.ev.price:0);
+  if(total===0){alert("请先选择PCS和电池");return;}
+  var tierPrice=Math.round(total*currentTier.rate);
+  var pid="p1";
+  if(cfg.pcs&&cfg.battery){
+    if(cfg.pcs.id==="pcs-50"&&cfg.battery.id==="bat-100")pid="p1";
+    else if(cfg.pcs.id==="pcs-100"&&cfg.battery.id==="bat-200")pid="p2";
+    else if(cfg.pcs.id==="pcs-200"&&cfg.battery.id==="bat-500")pid="p3";
+    else pid="p1";
+  }
+  var btn=document.getElementById("cta-btn");
+  btn.disabled=true;btn.textContent="创建中...";
+  var d=await api("/api/groups",{method:"POST",body:JSON.stringify({product_id:pid,tier_qty:currentTier.qty,tier_price:tierPrice})});
+  btn.disabled=false;btn.textContent="👥 发起拼团";
+  if(d&&d.ok){alert("拼团创建成功！");loadProducts();}
+  else if(d===null){}
+  else{alert((d&&d.error?"错误："+d.error:"创建失败"));}
+}
+
+async function joinGroup(){
+  if(!isLoggedIn){showLoginModal();return;}
+  var d=await api("/api/groups");
+  if(!d||!d.ok||!d.groups||!d.groups.length){alert("暂无可加入的团");return;}
+  var open=d.groups.filter(function(g){return g.status==="open"});
+  if(!open.length){alert("暂无可加入的团");return;}
+  openModal(open[0].product_id);
+}
+
+function calcIRR(){
+  var total=(cfg.pcs?cfg.pcs.price:0)+(cfg.battery?cfg.battery.price:0)+(cfg.ev?cfg.ev.price:0);
+  if(total===0)total=130000;
+  total=Math.round(total*currentTier.rate);
+  var elec=parseFloat(document.getElementById("irr-elec").value)||1.2;
+  var valley=parseFloat(document.getElementById("irr-valley").value)||0.35;
+  var kwh=parseFloat(document.getElementById("irr-kwh").value)||200;
+  var netProfit=kwh*(elec-valley)*365-total*0.05;
+  var irr=netProfit/total*100;
+  var payback=total/netProfit;
+  document.getElementById("irr-pct").textContent=irr.toFixed(1)+"%";
+  document.getElementById("irr-note").textContent="回收期："+payback.toFixed(1)+"年 · 年净收益 ¥"+Math.round(netProfit).toLocaleString();
+  document.getElementById("irr-result").classList.add("show");
+}
+
+function toggleFaq(el){el.classList.toggle("open")}
+
+document.querySelectorAll("a[href^='#']").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();var t=document.querySelector(this.getAttribute("href"));if(t)t.scrollIntoView({behavior:"smooth",block:"start"})})});
+  document.querySelectorAll("[data-section]").forEach(function(el){
+  el.addEventListener("click",function(e){
+    e.preventDefault();
+    document.querySelectorAll("[data-section]").forEach(function(a){a.classList.remove("active")});
+    el.classList.add("active");
+    var t=document.getElementById(el.dataset.section);
+    if(t)t.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+});
+
+document.querySelectorAll(".cat-btn").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    document.querySelectorAll(".cat-btn").forEach(function(b){b.classList.remove("active")});
+    btn.classList.add("active");
+    if(productsLoaded){buildCards(btn.dataset.cat,[]);updateCatCounts();}else{loadProducts();}
+  });
+});
+
+document.getElementById("detailModal").addEventListener("click",function(e){if(e.target===this)closeModal()});
+
+function updateCatCounts(){
+  document.querySelectorAll('.cat-btn[data-cat]').forEach(function(b){
+    var cat=b.dataset.cat;
+    var count=cat==='all'?PRODUCTS.length:PRODUCTS.filter(function(p){return p.category===cat}).length;
+    var sp=b.querySelector('.cat-count');
+    if(sp)sp.textContent='('+count+')';
+  });
+}
+
+
+loadProducts();
+updateSummary();
+
+// Partner apply
+function showPartnerModal(){document.getElementById("partnerModal").classList.add("show");document.getElementById("partner-success").style.display="none";}
+function closePartnerModal(){document.getElementById("partnerModal").classList.remove("show");}
+async function submitPartnerApply(){
+  var d={company:document.getElementById("p-company").value.trim(),contact:document.getElementById("p-contact").value.trim(),phone:document.getElementById("p-phone").value.trim(),email:document.getElementById("p-email").value.trim(),qualification:document.getElementById("p-qualification").value,employees:document.getElementById("p-employees").value,description:document.getElementById("p-desc").value.trim()};
+  if(!d.company||!d.contact||!d.phone){alert("请填写必填字段");return;}
+  var btn=document.getElementById("partner-submit-btn");btn.disabled=true;btn.textContent="提交中...";
+  var r=await fetch("/api/partner/apply",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});
+  var j=await r.json();btn.disabled=false;btn.textContent="提交入驻申请";
+  if(j.ok){document.getElementById("partner-success").style.display="block";setTimeout(closePartnerModal,2500);}
+  else{alert("提交失败："+(j.error||"未知错误"));}
+}
+// Investor apply
+function showInvestorModal(){document.getElementById("investorModal").classList.add("show");document.getElementById("investor-success").style.display="none";}
+function closeInvestorModal(){document.getElementById("investorModal").classList.remove("show");}
+async function submitInvestorApply(){
+  var d={company:document.getElementById("i-company").value.trim(),contact:document.getElementById("i-contact").value.trim(),phone:document.getElementById("i-phone").value.trim(),email:document.getElementById("i-email").value.trim(),mode:document.getElementById("i-mode").value,amount:document.getElementById("i-amount").value,description:document.getElementById("i-desc").value.trim()};
+  if(!d.company||!d.contact||!d.phone){alert("请填写必填字段");return;}
+  var btn=document.getElementById("investor-submit-btn");btn.disabled=true;btn.textContent="提交中...";
+  var r=await fetch("/api/investor/apply",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});
+  var j=await r.json();btn.disabled=false;btn.textContent="提交合作申请";
+  if(j.ok){document.getElementById("investor-success").style.display="block";setTimeout(closeInvestorModal,2500);}
+  else{alert("提交失败："+(j.error||"未知错误"));}
+}
+// Contact modal
+function showContactModal(){document.getElementById("contactModal").classList.add("show");document.getElementById("contact-success").style.display="none";}
+function closeContactModal(){document.getElementById("contactModal").classList.remove("show");}
+async function submitContact(){
+  var name=document.getElementById("c-name").value.trim(),phone=document.getElementById("c-phone").value.trim(),msg=document.getElementById("c-msg").value.trim();
+  if(!phone){alert("请填写手机号码");return;}
+  var btn=document.getElementById("contact-submit-btn");btn.disabled=true;btn.textContent="发送中...";
+  // Store contact in localStorage as simple feedback
+  btn.disabled=false;btn.textContent="发送留言";
+  document.getElementById("contact-success").style.display="block";
+  document.getElementById("c-name").value="";document.getElementById("c-phone").value="";document.getElementById("c-msg").value="";
+  setTimeout(closeContactModal,2000);
+}
+// Close modals on overlay click
+document.addEventListener("click",function(e){if(e.target.classList.contains("modal-overlay")){document.querySelectorAll(".modal-overlay.show").forEach(function(m){m.classList.remove("show")});}});
+
+
+// Scroll spy for nav
+var sections=document.querySelectorAll("section[id],.config-section[id],.faq-section[id]");
+window.addEventListener('scroll',function(){
+  var scrollY=window.scrollY+80;
+  sections.forEach(function(sec){
+    if(scrollY>=sec.offsetTop&&scrollY<sec.offsetTop+sec.offsetHeight){
+      document.querySelectorAll("[data-section]").forEach(function(a){a.classList.remove('active')});
+      document.querySelector("[data-section="+sec.id+"]").classList.add('active');
+    }
+  });
+});
+
+</script>
+
+<!-- Partner Apply Modal -->
+<div class="modal-overlay" id="partnerModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-title">🏗️ 安装服务商入驻</div><div style="font-size:12px;color:var(--text2);margin-top:4px">提交企业资质，审核通过后获授权安装商资格</div></div>
+      <div class="modal-close" onclick="closePartnerModal()">×</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">
+        <h4>基本信息</h4>
+        <div class="form-group"><label class="form-label">企业名称 *</label><input id="p-company" class="form-input" type="text" placeholder="例：浙江华能电力工程"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">联系人 *</label><input id="p-contact" class="form-input" type="text" placeholder="张三"></div>
+          <div class="form-group"><label class="form-label">联系电话 *</label><input id="p-phone" class="form-input" type="tel" placeholder="138-0000-0000"></div>
+        </div>
+        <div class="form-group"><label class="form-label">电子邮箱</label><input id="p-email" class="form-input" type="email" placeholder="contact@company.com"></div>
+      </div>
+      <div class="form-section">
+        <h4>资质信息</h4>
+        <div class="form-group"><label class="form-label">电力工程资质</label>
+          <select id="p-qualification" class="form-select">
+            <option value="">请选择资质类型</option>
+            <option value="承装(修、试)电力设施许可证">承装(修、试)电力设施许可证</option>
+            <option value="电力工程施工总承包资质">电力工程施工总承包资质</option>
+            <option value="安全生产许可证">安全生产许可证</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">员工规模</label>
+          <select id="p-employees" class="form-select">
+            <option value="">请选择规模</option>
+            <option value="10人以下">10人以下</option>
+            <option value="10-50人">10-50人</option>
+            <option value="50-200人">50-200人</option>
+            <option value="200人以上">200人以上</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">公司简介</label><textarea id="p-desc" class="form-input" rows="3" placeholder="简述公司主营业务和过往储能项目经验"></textarea></div>
+      </div>
+      <div id="partner-success" class="form-success-popup">✅ 申请已提交！我们将在24小时内联系您。</div>
+      <button class="modal-join-btn" id="partner-submit-btn" onclick="submitPartnerApply()">提交入驻申请</button>
+    </div>
+  </div>
+</div>
+
+<!-- Investor / EMC Apply Modal -->
+<div class="modal-overlay" id="investorModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-title">🤝 EMC合作 / 投资方申请</div><div style="font-size:12px;color:var(--text2);margin-top:4px">零投入享节能收益分成，多种合作模式灵活选择</div></div>
+      <div class="modal-close" onclick="closeInvestorModal()">×</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">
+        <h4>基本信息</h4>
+        <div class="form-group"><label class="form-label">企业/机构名称 *</label><input id="i-company" class="form-input" type="text" placeholder="例：深圳能源集团"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">联系人 *</label><input id="i-contact" class="form-input" type="text" placeholder="李经理"></div>
+          <div class="form-group"><label class="form-label">联系电话 *</label><input id="i-phone" class="form-input" type="tel" placeholder="138-0000-0000"></div>
+        </div>
+        <div class="form-group"><label class="form-label">电子邮箱</label><input id="i-email" class="form-input" type="email" placeholder="investment@company.com"></div>
+      </div>
+      <div class="form-section">
+        <h4>合作意向</h4>
+        <div class="form-group"><label class="form-label">合作模式</label>
+          <select id="i-mode" class="form-select">
+            <option value="">请选择合作模式</option>
+            <option value="EMC能源管理合同">EMC能源管理合同（零投入）</option>
+            <option value="联合投资">联合投资（按股分成）</option>
+            <option value="设备租赁">设备租赁（融资租赁）</option>
+            <option value="全额购买">全额购买（设备采购）</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">意向投资金额</label>
+          <select id="i-amount" class="form-select">
+            <option value="">请选择金额区间</option>
+            <option value="50万以下">50万以下</option>
+            <option value="50-200万">50-200万</option>
+            <option value="200-500万">200-500万</option>
+            <option value="500-1000万">500-1000万</option>
+            <option value="1000万以上">1000万以上</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">补充说明</label><textarea id="i-desc" class="form-input" rows="3" placeholder="描述合作意向、项目背景或具体需求"></textarea></div>
+      </div>
+      <div id="investor-success" class="form-success-popup">✅ 申请已提交！我们将在24小时内联系您。</div>
+      <button class="modal-join-btn" id="investor-submit-btn" onclick="submitInvestorApply()">提交合作申请</button>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <div><div class="modal-title">📞 联系我们</div><div style="font-size:12px;color:var(--text2);margin-top:4px">有任何问题？我们随时为您解答</div></div>
+      <div class="modal-close" onclick="closeContactModal()">×</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+          <div style="padding:16px;background:var(--bg3);border-radius:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:6px">📧</div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:4px">商务合作</div>
+            <div style="font-size:12px;font-weight:700">group@solaripple.com</div>
+          </div>
+          <div style="padding:16px;background:var(--bg3);border-radius:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:6px">📱</div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:4px">客服热线</div>
+            <div style="font-size:12px;font-weight:700">400-888-8888</div>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">您的称呼</label><input id="c-name" class="form-input" type="text" placeholder="张三（先生/女士）"></div>
+        <div class="form-group"><label class="form-label">手机号码</label><input id="c-phone" class="form-input" type="tel" placeholder="138-0000-0000"></div>
+        <div class="form-group"><label class="form-label">留言内容</label><textarea id="c-msg" class="form-input" rows="3" placeholder="请描述您的问题或需求..."></textarea></div>
+        <div id="contact-success" class="form-success-popup">✅ 留言已发送！我们将尽快与您联系。</div>
+        <button class="modal-join-btn" id="contact-submit-btn" onclick="submitContact()">发送留言</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
