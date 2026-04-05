@@ -256,13 +256,58 @@ footer{border-top:1px solid var(--border);padding:48px;background:var(--bg2)}
 .form-select:focus{outline:none;border-color:var(--accent)}
 .form-success-popup{padding:14px;background:rgba(0,200,83,0.1);border:1px solid rgba(0,200,83,0.3);border-radius:10px;text-align:center;color:#00C853;font-weight:700;font-size:13px;margin-bottom:12px;display:none}
 
+
+/* Credit Rating Badges */
+.credit-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:900}
+.credit-badge.aaa{background:rgba(0,200,83,0.15);color:#00C853;border:1px solid rgba(0,200,83,0.3)}
+.credit-badge.aa{background:rgba(0,200,83,0.12);color:#00C853;border:1px solid rgba(0,200,83,0.25)}
+.credit-badge.a{background:rgba(0,200,83,0.08);color:#00C853;border:1px solid rgba(0,200,83,0.2)}
+.credit-badge.bbb{background:rgba(255,200,0,0.15);color:#FFD700;border:1px solid rgba(255,200,0,0.3)}
+.credit-badge.bb{background:rgba(255,140,0,0.15);color:#FF8C00;border:1px solid rgba(255,140,0,0.3)}
+.credit-badge.unrated{background:rgba(255,255,255,0.05);color:var(--text3);border:1px solid var(--border)}
+.credit-badge.verified{background:rgba(0,200,83,0.1);color:#00C853;border:1px solid rgba(0,200,83,0.25)}
+.credit-badge.verified::before{content:"✓ ";font-size:10px}
+/* Group Hub */
+.hub-filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.hub-filter{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:700;background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .2s}
+.hub-filter:hover,.hub-filter.active{background:var(--accent3);border-color:var(--accent);color:var(--accent)}
+.hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.hub-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;transition:all .3s;cursor:pointer}
+.hub-card:hover{border-color:rgba(255,140,0,0.35);transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,0.3)}
+.hub-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.hub-card-title{font-size:14px;font-weight:900;line-height:1.3}
+.hub-card-meta{display:flex;flex-direction:column;gap:6px;margin:12px 0;padding:12px;background:var(--bg3);border-radius:10px;font-size:12px;color:var(--text2)}
+.hub-card-meta span{color:var(--text);font-weight:700}
+.hub-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.hub-card-price{font-size:18px;font-weight:900;color:var(--accent);font-family:"Inter",sans-serif}
+.hub-card-join-btn{padding:8px 16px;background:var(--accent);color:#000;border:none;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit;transition:all .2s}
+.hub-card-join-btn:hover{background:var(--accent2)}
+/* Smart Match Bar */
+.match-bar{margin-top:20px;padding:16px 20px;background:linear-gradient(135deg,rgba(0,200,83,0.08),rgba(255,140,0,0.08));border:1px solid rgba(255,140,0,0.2);border-radius:16px;display:none}
+.match-bar.show{display:block}
+.match-bar-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:12px;font-weight:800;color:var(--accent)}
+.match-bar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.match-item{padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s}
+.match-item:hover{border-color:rgba(255,140,0,0.4);transform:translateY(-1px)}
+.match-item.active{border-color:var(--accent);background:var(--accent3)}
+.match-item-name{font-size:13px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.match-item-city{font-size:11px;color:var(--text3);margin-top:3px}
+.match-item-join{font-size:11px;color:var(--text2);margin-top:4px}
+.match-item-join strong{color:var(--accent)}
+.match-score{font-size:10px;font-weight:900;padding:1px 5px;border-radius:4px;background:rgba(0,200,83,0.15);color:#00C853}
+.empty-hub{text-align:center;padding:60px 20px;color:var(--text2)}
+.empty-hub-icon{font-size:48px;margin-bottom:16px;opacity:0.5}
+.empty-hub-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.empty-hub-sub{font-size:13px;color:var(--text3)}
+
 </style>
 </head>
 <body>
 <nav>
   <div class="nav-logo"><span class="ic">◉</span> Solaripple<span class="sub">GroupBuy</span></div>
   <div class="nav-links">
-    <a href="#products" class="active" data-section="products">精选拼团</a>
+    <a href="#products" data-section="products">精选拼团</a>
+    <a href="#hub" data-section="hub">团购广场</a>
     <a href="#configurator" data-section="configurator">配置器</a>
     <a href="#faq" data-section="faq">常见问题</a>
     <a href="#partner" data-section="partner">服务商入驻</a>
@@ -323,6 +368,25 @@ footer{border-top:1px solid var(--border);padding:48px;background:var(--bg2)}
     <div class="how-card"><div class="how-icon">👥</div><h3>② 加入拼团</h3><p>选择拼团规模（3台/5台/10台），凑满人数自动生效，48小时退款保障。</p></div>
     <div class="how-card"><div class="how-icon">📈</div><h3>③ 锁定收益</h3><p>拼团成功享受折扣价，EnOS系统接入，实时监控收益，支持微信/支付宝。</p></div>
   </div>
+
+<section class="section" id="hub">
+  <div class="section-label">Group Buy Hub</div>
+  <div class="section-title">团购广场</div>
+  <p class="section-sub">发现同区域、同容量的潜在拼团伙伴，一起买更便宜</p>
+  <div class="hub-filters">
+    <button class="hub-filter active" data-hub-cat="all">全部</button>
+    <button class="hub-filter" data-hub-cat="100kWh">100kWh级</button>
+    <button class="hub-filter" data-hub-cat="200kWh">200kWh级</button>
+    <button class="hub-filter" data-hub-cat="500kWh">500kWh级</button>
+    <button class="hub-filter" data-hub-cat="hot">🔥 热门</button>
+  </div>
+  <div class="hub-grid" id="hub-grid">
+    <div class="empty-hub">
+      <div class="empty-hub-icon">🏘️</div>
+      <div class="empty-hub-title">暂无正在进行的团购</div>
+      <div class="empty-hub-sub">成为第一个发起团购的企业吧</div>
+    </div>
+  </div>
 </section>
 
 <section class="config-section" id="configurator">
@@ -366,7 +430,15 @@ footer{border-top:1px solid var(--border);padding:48px;background:var(--bg2)}
         </div>
       </div>
 
-      <div class="summary-card">
+      
+<div class="match-bar" id="matchBar">
+  <div class="match-bar-header">🔗 发现 <span id="matchCount">0</span> 个相似配置团购，匹配度 >70%</div>
+  <div class="match-bar-grid" id="matchGrid"></div>
+  <div style="margin-top:10px;text-align:center">
+    <button class="cta-secondary" onclick="document.getElementById('hub').scrollIntoView({behavior:'smooth'})" style="font-size:12px;padding:6px 16px">查看全部团购 →</button>
+  </div>
+</div>
+<div class="summary-card">
         <div class="summary-header">📋 配置清单</div>
         <div class="summary-body">
           <div id="summary-items">
@@ -421,7 +493,7 @@ footer{border-top:1px solid var(--border);padding:48px;background:var(--bg2)}
   <div class="partner-wrapper">
     <div class="partner-card">
       <div class="partner-icon">🏗️</div>
-      <h3>安装服务商入驻</h3>
+      <h3>安装服务商入驻 <span class="credit-badge verified">已认证</span></h3>
       <p>拥有电力工程资质？欢迎加入安装服务商网络，享受设备折扣和订单佣金。</p>
       <button class="apply-btn" onclick="showPartnerModal()">📋 提交入驻申请</button>
       <div class="partner-btns">
@@ -432,7 +504,7 @@ footer{border-top:1px solid var(--border);padding:48px;background:var(--bg2)}
     </div>
     <div class="partner-card">
       <div class="partner-icon">🤝</div>
-      <h3>EMC合作 / 投资方</h3>
+      <h3>EMC合作 / 投资方 <span class="credit-badge unrated">待评级</span></h3>
       <p>EMC能源管理合同，设备租赁、联合投资多种模式灵活选择，零投入享节能收益分成。</p>
       <button class="apply-btn" onclick="showInvestorModal()">📧 联系投资团队</button>
       <div class="partner-btns">
@@ -628,6 +700,7 @@ function doLogin(){
         currentUser={name:name||phone,phone:phone,city:city};isLoggedIn=true;
         updateNav(currentUser);
         btn.textContent="✓ 登录成功";
+        setTimeout(function(){runSmartMatch();},200);
         setTimeout(closeLoginModal,1200);
       }else{
         var err=document.getElementById("login-error");
@@ -875,6 +948,92 @@ function updateCatCounts(){
 loadProducts();
 updateSummary();
 
+// ── Group Buy Hub ───────────────────────────────────────────────
+var hubData=[];
+
+async function loadHub(){
+  var d=await api("/api/groups");
+  if(!d||!d.ok||!d.groups){renderHubEmpty();return;}
+  hubData=d.groups.filter(function(g){return g.status==="open"});
+  renderHub("all");
+}
+
+function renderHub(cat){
+  var grid=document.getElementById("hub-grid");
+  if(!hubData.length){renderHubEmpty();return;}
+  var items=cat==="all"?hubData:cat==="hot"?hubData.filter(function(g){return g.joined>=g.target-1}):hubData.filter(function(g){return g.capacity&&g.capacity.indexOf(cat)>=0});
+  if(!items.length){renderHubEmpty();return;}
+  var h="";
+  items.forEach(function(g){
+    var tier0=g.tiers&&g.tiers[0];
+    var pct=Math.round(g.joined/g.target*100);
+    var almost=g.joined>=g.target-1;
+    h+='<div class="hub-card" onclick="openModal(\''+g.product_id+'\')">';
+    h+='<div class="hub-card-header"><div class="hub-card-title">'+escapeHtml(g.product_name||"工商光储系统")+'</div><span class="credit-badge '+(g.credit_rating||"unrated")+'">'+(g.credit_rating||"未评级")+'</span></div>';
+    h+='<div class="gb-progress" style="margin:0 0 10px"><div class="gb-progress-fill'+(almost?' danger':'')+'" style="width:'+pct+'%"></div></div>';
+    h+='<div class="hub-card-meta"><div>已报名 <span>'+g.joined+'</span> 人 · 目标 <span>'+g.target+'</span> 人</div><div>地区：<span>'+(g.city||"全国")+'</div><div>容量：<span>'+(g.capacity||"未填写")+'</div></div>';
+    h+='<div class="hub-card-footer"><div><div class="hub-card-price">¥'+(tier0?Math.round(tier0.price/10000):"?")+'万起</div><div style="font-size:11px;color:var(--text3);margin-top:2px">'+g.joined+'/'+g.target+'人 · '+g.tier_qty+'台团</div></div>';
+    h+='<button class="hub-card-join-btn" onclick="event.stopPropagation();openModal(\''+g.product_id+'\')">参与</button></div></div>';
+  });
+  grid.innerHTML=h;
+}
+
+function renderHubEmpty(){
+  var grid=document.getElementById("hub-grid");
+  grid.innerHTML='<div class="empty-hub"><div class="empty-hub-icon">🏘️</div><div class="empty-hub-title">暂无正在进行的团购</div><div class="empty-hub-sub">成为第一个发起团购的企业吧</div></div>';
+}
+
+function escapeHtml(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+// ── Smart Match ────────────────────────────────────────────────
+function runSmartMatch(){
+  var pcs=cfg.pcs&&cfg.pcs.id||"",bat=cfg.battery&&cfg.battery.id||"",city=currentUser&&currentUser.city||"";
+  var total=(cfg.pcs?cfg.pcs.price:0)+(cfg.battery?cfg.battery.price:0);
+  if(total===0)return;
+  var bar=document.getElementById("matchBar");
+  if(!hubData.length){bar.classList.remove("show");return;}
+  var tierPrice=Math.round(total*currentTier.rate);
+  var matches=hubData.filter(function(g){
+    var score=0;
+    if(g.city&&city&&g.city.indexOf(city)>=0)score+=40;
+    if(g.capacity&&bat){
+      var gbcap=parseInt(g.capacity)||0;
+      var mycap=parseInt(bat.replace("bat-",""))||0;
+      if(Math.abs(gbcap-mycap)<=100)score+=35;
+    }
+    if(g.tier_price&&Math.abs(g.tier_price-tierPrice)<=30000)score+=20;
+    return score>=40;
+  });
+  if(!matches.length){bar.classList.remove("show");return;}
+  var grid=document.getElementById("matchGrid");
+  var count=document.getElementById("matchCount");
+  count.textContent=matches.length;
+  var h="";
+  matches.slice(0,3).forEach(function(g){
+    var tier0=g.tiers&&g.tiers[0];
+    h+='<div class="match-item" onclick="openModal(\''+g.product_id+'\')">';
+    h+='<div class="match-item-name">'+escapeHtml(g.product_name||"工商光储")+' <span class="match-score">推荐</span></div>';
+    h+='<div class="match-item-city">📍 '+(g.city||"全国")+'</div>';
+    h+='<div class="match-item-join">已报名 <strong>'+g.joined+'</strong> 人 · 目标'+g.target+'人</div>';
+    h+='</div>';
+  });
+  grid.innerHTML=h;
+  bar.classList.add("show");
+}
+
+// ── Hub Filter ─────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded",function(){
+  document.querySelectorAll(".hub-filter").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      document.querySelectorAll(".hub-filter").forEach(function(b){b.classList.remove("active")});
+      btn.classList.add("active");
+      renderHub(btn.dataset.hubCat);
+    });
+  });
+  loadHub();
+});
+
+
 // Partner apply
 function showPartnerModal(){document.getElementById("partnerModal").classList.add("show");document.getElementById("partner-success").style.display="none";}
 function closePartnerModal(){document.getElementById("partnerModal").classList.remove("show");}
@@ -965,6 +1124,18 @@ window.addEventListener('scroll',function(){
             <option value="10-50人">10-50人</option>
             <option value="50-200人">50-200人</option>
             <option value="200人以上">200人以上</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">企业信用评级</label>
+          <select id="p-credit" class="form-select">
+            <option value="">请选择（如有）</option>
+            <option value="AAA">AAA — 极优 (90-100分)</option>
+            <option value="AA">AA — 优秀 (80-89分)</option>
+            <option value="A">A — 良好 (70-79分)</option>
+            <option value="BBB">BBB — 中等 (60-69分)</option>
+            <option value="BB">BB — 一般 (50-59分)</option>
+            <option value="B">B — 较差 (40-49分)</option>
+            <option value="未评级">未评级</option>
           </select>
         </div>
         <div class="form-group"><label class="form-label">公司简介</label><textarea id="p-desc" class="form-input" rows="3" placeholder="简述公司主营业务和过往储能项目经验"></textarea></div>

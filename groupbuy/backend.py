@@ -24,10 +24,10 @@ def init_db():
     c = conn.cursor()
     c.execute('CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, phone TEXT UNIQUE NOT NULL, name TEXT, company TEXT, city TEXT, role TEXT DEFAULT "buyer", verified INTEGER DEFAULT 0, created_at INTEGER)')
     c.execute('CREATE TABLE IF NOT EXISTS auth_tokens (token TEXT PRIMARY KEY, user_id TEXT, created_at INTEGER)')
-    c.execute('CREATE TABLE IF NOT EXISTS groups (id TEXT PRIMARY KEY, product_id TEXT NOT NULL, product_name TEXT, tier_qty INTEGER, tier_price INTEGER, creator_id TEXT, status TEXT DEFAULT "open", target INTEGER, joined INTEGER DEFAULT 1, created_at INTEGER, expires_at INTEGER)')
+    c.execute('CREATE TABLE IF NOT EXISTS groups (id TEXT PRIMARY KEY, product_id TEXT NOT NULL, product_name TEXT, tier_qty INTEGER, tier_price INTEGER, creator_id TEXT, status TEXT DEFAULT "open", target INTEGER, joined INTEGER DEFAULT 1, created_at INTEGER, expires_at INTEGER, city TEXT, capacity TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS participants (id TEXT PRIMARY KEY, group_id TEXT, user_id TEXT, qty INTEGER DEFAULT 1, created_at INTEGER, status TEXT DEFAULT "pending")')
     c.execute('CREATE TABLE IF NOT EXISTS sms_codes (phone TEXT PRIMARY KEY, code TEXT, created_at INTEGER, expires_at INTEGER)')
-    c.execute('CREATE TABLE IF NOT EXISTS partner_applications (id TEXT PRIMARY KEY, company TEXT, contact TEXT, phone TEXT, email TEXT, qualification TEXT, employees TEXT, description TEXT, status TEXT, created_at INTEGER)')
+    c.execute('CREATE TABLE IF NOT EXISTS partner_applications (id TEXT PRIMARY KEY, company TEXT, contact TEXT, phone TEXT, email TEXT, qualification TEXT, employees TEXT, description TEXT, status TEXT, created_at INTEGER, credit_rating TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS investor_applications (id TEXT PRIMARY KEY, company TEXT, contact TEXT, phone TEXT, email TEXT, mode TEXT, amount TEXT, description TEXT, status TEXT, created_at INTEGER)')
     conn.commit()
     conn.close()
@@ -141,8 +141,9 @@ def create_group():
     gid = uuid.uuid4().hex
     now = int(time.time())
     c = get_db()
-    c.execute('INSERT INTO groups (id,product_id,product_name,tier_qty,tier_price,creator_id,status,target,joined,created_at,expires_at) VALUES (?,?,?,?,?,?,?,?,1,?,?)',
-             (gid, product_id, product['name'], tier_qty, tier_price, uid, 'open', tier_qty, now, now + 86400000*7))
+    c.execute('INSERT INTO groups (id,product_id,product_name,tier_qty,tier_price,creator_id,status,target,joined,created_at,expires_at,city,capacity) VALUES (?,?,?,?,?,?,?,?,1,?,?,?,?)',
+             (gid, product_id, product['name'], tier_qty, tier_price, uid, 'open', tier_qty, now, now + 86400000*7,
+              data.get('city',''), product.get('category','')))
     c.execute('INSERT INTO participants (id,group_id,user_id,qty,created_at,status) VALUES (?,?,?,1,?,?)',
              (uuid.uuid4().hex, gid, uid, now, 'joined'))
     c.commit()
@@ -264,3 +265,57 @@ if __name__ == '__main__':
     app.run(host='127.0.0.1', port=PORT, debug=False)
 
 
+
+# Seed mock group data for demo
+def seed_demo_data():
+    conn = get_db()
+    c = conn.cursor()
+    # Check if we already have groups
+    existing = c.execute('SELECT COUNT(*) FROM groups').fetchone()[0]
+    if existing > 0:
+        conn.close()
+        return
+    now = int(time.time())
+    expiry = now + 86400 * 30
+    mock_groups = [
+        ('g001','p1','苏州工业园区工商光储',3,117000,'sys','open',10,7,now,expiry,'苏州','100kWh'),
+        ('g002','p2','杭州未来科技城储能项目',3,218700,'sys','open',5,4,now,expiry,'杭州','200kWh'),
+        ('g003','p3','南京江北新区大型储能',5,437750,'sys','open',3,2,now,expiry,'南京','500kWh'),
+        ('g004','p4','上海张江高科PCS采购',5,70200,'sys','open',10,9,now,expiry,'上海','PCS'),
+        ('g005','p1','深圳南山工商储能',3,117000,'sys','open',10,3,now,expiry,'深圳','100kWh'),
+        ('g006','p2','北京亦庄储能项目',3,218700,'sys','open',5,1,now,expiry,'北京','200kWh'),
+    ]
+    for row in mock_groups:
+        c.execute('INSERT OR IGNORE INTO groups (id,product_id,product_name,tier_qty,tier_price,creator_id,status,target,joined,created_at,expires_at,city,capacity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', row)
+    conn.commit()
+    conn.close()
+    print(f'[DEMO] Seeded {len(mock_groups)} mock groups')
+
+seed_demo_data()
+
+
+# Seed mock group data for demo
+def seed_demo_data():
+    conn = get_db()
+    c = conn.cursor()
+    existing = c.execute("SELECT COUNT(*) FROM groups").fetchone()[0]
+    if existing > 0:
+        conn.close()
+        return
+    now = int(time.time())
+    expiry = now + 86400 * 30
+    mock_groups = [
+        ("g001","p1","苏州工业园区工商光储",3,117000,"sys","open",10,7,now,expiry,"苏州","100kWh"),
+        ("g002","p2","杭州未来科技城储能项目",3,218700,"sys","open",5,4,now,expiry,"杭州","200kWh"),
+        ("g003","p3","南京江北新区大型储能",5,437750,"sys","open",3,2,now,expiry,"南京","500kWh"),
+        ("g004","p4","上海张江高科PCS采购",5,70200,"sys","open",10,9,now,expiry,"上海","PCS"),
+        ("g005","p1","深圳南山工商储能",3,117000,"sys","open",10,3,now,expiry,"深圳","100kWh"),
+        ("g006","p2","北京亦庄储能项目",3,218700,"sys","open",5,1,now,expiry,"北京","200kWh"),
+    ]
+    for row in mock_groups:
+        c.execute("INSERT OR IGNORE INTO groups (id,product_id,product_name,tier_qty,tier_price,creator_id,status,target,joined,created_at,expires_at,city,capacity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", row)
+    conn.commit()
+    conn.close()
+    print("[DEMO] Seeded %d mock groups" % len(mock_groups))
+
+seed_demo_data()
