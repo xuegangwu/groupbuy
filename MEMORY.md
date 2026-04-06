@@ -178,6 +178,52 @@
 
 *每次对话结束后更新此文件和当日memory/文件。*
 
+## RippleOps 运营平台（2026-04-06 ~ 2026-04-07）
+
+**GitHub仓库**：https://github.com/xuegangwu/ops
+**服务器目录**：`/var/www/ops/`（nginx root）
+**API服务**：`scm-api` PM2（port 3010）
+**数据库**：PostgreSQL supply_chain（scm/scm2026@127.0.0.1:5432）
+
+### Phase 1 — AI Level 1（已完成 2026-04-06）
+- AI告警压缩引擎（5000条/分钟 → 10-20条/小时）
+- AI根因诊断（RAG规则推理，<3秒）
+- 自动运维工单生成（MWO-YYYY-NNNN格式）
+- 故障知识库（11个典型储能故障案例）
+- `fault_knowledge` / `alert_compressions` / `maintenance_work_orders` / `stations`
+
+### Phase 2.1 — 技师APP·派工系统（已完成 2026-04-06）
+- 技师管理（CRUD + 技能标签 + GPS位置）
+- 派工流程（派工→接单→拒单→到达→开工→完工→客户确认）
+- AI自动派工算法（技能匹配×0.35 + 距离×0.25 + 忙碌度×0.20 + 评分×0.20）
+- 技师APP手机版（`/tech-app.html`）
+- 运维工作台（`/ops-service.html`）
+- 测试账号：13812345601~13812345604
+
+### Phase 2.2 — 技师APP·扫码/拍照/签名（已完成 2026-04-07）
+- SN码扫码验证（GPS距离计算，站点匹配）
+- 照片上传（Base64，4种类型：维修前/后/故障点/环境）
+- 客户电子签名（Canvas手写 + 5星评价）
+- Mock通知系统（派工/接单/完工/评价）
+- 工单操作日志（`work_order_logs`）
+- 照片访问：`https://ops.solaripple.com/uploads/wo/{wo_id}/`
+
+### GitHub提交记录
+| Commit | 内容 |
+|:---|:---|
+| `afd61ba` | Phase 2.2 - SN扫码/拍照/签名/通知 |
+| `85c791d` | Phase 2.1 完成归档 |
+| `ae6148a` | fix: assign-by-skill dollar-quote bug |
+| `05ff92c` | Phase 2.1 技师APP完整代码 |
+| `d31d08d` | RIPPLEOPS_PLATFORM_V2.md 综合方案 |
+
+### Phase 2.3 计划
+- 真实微信模板消息（需微信服务号）
+- 真实短信通知（需阿里云SMS）
+- 客户自助查询门户
+
+---
+
 ## 认证系统（2026-04-06）
 
 ### 已实现
