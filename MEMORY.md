@@ -211,16 +211,26 @@
 ### GitHub提交记录
 | Commit | 内容 |
 |:---|:---|
+| `8c3955d` | Phase 3 - 经营驾驶舱+客户门户+BOM+通知服务 |
+| `df60c01` | Phase 2.2 迭代修复（技师状态流转/电话签字/去重）|
 | `afd61ba` | Phase 2.2 - SN扫码/拍照/签名/通知 |
 | `85c791d` | Phase 2.1 完成归档 |
 | `ae6148a` | fix: assign-by-skill dollar-quote bug |
 | `05ff92c` | Phase 2.1 技师APP完整代码 |
 | `d31d08d` | RIPPLEOPS_PLATFORM_V2.md 综合方案 |
 
-### Phase 2.3 计划
-- 真实微信模板消息（需微信服务号）
-- 真实短信通知（需阿里云SMS）
-- 客户自助查询门户
+### Phase 3 — 经营驾驶舱+客户门户（已完成 2026-04-07）
+- 经营驾驶舱（/dashboard/ops）：KPI/团队绩效/状态分布/趋势
+- 客户门户（/customer/:station_id）：电站状态+工单+统计
+- BOM成本计算（/bom/:product_type）：3机型完整BOM+成本
+- 通知服务（notification-service.js）：微信+SMS占位配置，MOCK模式就绪
+- 预防性维护工单（/maintenance-schedule）
+
+### Phase 4 计划
+- 真实微信模板消息（需微信服务号申请后配置）
+- 真实短信通知（需阿里云SMS申请后配置）
+- 客户微信服务号自助查询
+- AI日报自动推送
 
 ---
 
