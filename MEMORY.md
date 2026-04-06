@@ -177,3 +177,20 @@
 ---
 
 *每次对话结束后更新此文件和当日memory/文件。*
+
+## 认证系统（2026-04-06）
+
+### 已实现
+- **后端**：enos-api (Node.js, port 8080)
+  - `POST /api/auth/register` - 注册（name/email/password/company/phone）
+  - `POST /api/auth/login` - 登录，JWT → httpOnly Cookie（7天）
+  - `GET /api/auth/me` - 获取当前用户（支持Cookie + Authorization头）
+  - `POST /api/auth/logout` - 登出
+  - User Schema: name/company/email/password/phone/role/createdAt
+  - 密码bcrypt加密（cost 12）
+  - 角色：admin/user（默认user）
+- **前端**：首页登录弹窗（/）
+  - 登录/注册切换Tab
+  - 用户面板（登录后显示姓名+进入EnOS按钮）
+  - Nav栏显示用户名+退出按钮
+  - checkLoginState()页面加载时自动检测登录态
