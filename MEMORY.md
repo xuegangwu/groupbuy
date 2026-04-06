@@ -227,10 +227,26 @@
 - 预防性维护工单（/maintenance-schedule）
 
 ### Phase 4 计划
-- 真实微信模板消息（需微信服务号申请后配置）
-- 真实短信通知（需阿里云SMS申请后配置）
-- 客户微信服务号自助查询
-- AI日报自动推送
+- **P0**：OA审批后端引擎（PR→PO自动生成）
+- **P0**：微信服务号+阿里云SMS（申请后填配置即启用）
+- **P0**：预防性维护Cron（每日00:00自动扫描）
+- **P1**：客户门户+EnOS实时数据对接
+- **P1**：技师培训记录体系
+- **P2**：客户微信服务号自助查询
+- **P2**：AI日报自动推送
+
+### 设计文档（GitHub ops仓库）
+| 文档 | 内容 |
+|:---|:---|
+| `NEXT_STEPS_PLAN.md` | 下一步工作规划 |
+| `FULL_TEST_REPORT.md` | 完整测试报告 |
+| `RIPPLEOPS_PLATFORM_V2.md` | 全平台综合方案 |
+| `PHASE3_DESIGN.md` | Phase 3设计 |
+| `PHASE2_2_DESIGN.md` | Phase 2.2设计 |
+| `PHASE2_1_COMPLETION_REPORT.md` | Phase 2.1完成报告 |
+| `TECHNICIAN_APP_DESIGN_v1.md` | 技师APP设计 |
+| `OA_APPROVAL_DESIGN_v1.md` | OA审批设计 |
+| `MULTI_ROLE_DASHBOARD_DESIGN_v1.md` | 多角色工作台设计 |
 
 ---
 
