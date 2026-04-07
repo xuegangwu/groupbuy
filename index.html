@@ -533,39 +533,36 @@ footer{border-top:1px solid var(--border);padding:48px;background:var(--bg2)}
 <div class="modal-overlay" id="loginModal">
   <div class="modal">
     <div class="modal-header">
-      <div><div class="modal-title" id="loginTitle">登录 / 注册</div><div style="font-size:12px;color:var(--text2);margin-top:4px">参与拼团前请先登录</div></div>
-      <div class="modal-close" onclick="closeLoginModal()">×</div>
+      <div><div class="modal-title">登录 / 注册</div><div style="font-size:12px;color:var(--text2);margin-top:4px">参与拼团前请先登录</div></div>
+      <div class="modal-close" onclick="closeLoginModal()">x</div>
     </div>
     <div class="modal-body">
-      <div class="form-section">
-        <div class="form-group">
-          <label class="form-label">手机号码</label>
-          <div style="display:flex;gap:8px">
-            <input id="login-phone" class="form-input" type="tel" placeholder="138-0000-0000" style="flex:1">
-            <button id="sendCodeBtn" class="cta-btn" style="width:110px;padding:10px 8px;font-size:12px" onclick="sendCode()">发送验证码</button>
-          </div>
+      <div id="loginPanel">
+        <div class="form-section">
+          <div class="form-group"><label class="form-label">邮箱</label><input id="login-email" class="form-input" type="email" placeholder="you@company.com"></div>
+          <div class="form-group"><label class="form-label">密码</label><input id="login-password" class="form-input" type="password" placeholder=""></div>
+          <div id="login-error" style="color:var(--red);font-size:12px;margin-bottom:10px;display:none"></div>
+          <button id="login-btn" class="modal-join-btn" onclick="doLogin()" style="margin-bottom:10px">登录</button>
+          <div style="text-align:center;font-size:11px;color:var(--text3)">没有账户？<a onclick="switchToRegister()" style="color:var(--accent);cursor:pointer">立即注册</a></div>
         </div>
-        <div class="form-group" id="codeGroup" style="display:none">
-          <label class="form-label">验证码</label>
-          <input id="login-code" class="form-input" type="text" placeholder="输入6位验证码" maxlength="6">
+      </div>
+      <div id="registerPanel" style="display:none">
+        <div class="form-section">
+          <div class="form-group"><label class="form-label">姓名 *</label><input id="reg-name" class="form-input" type="text" placeholder="您的姓名"></div>
+          <div class="form-group"><label class="form-label">公司</label><input id="reg-company" class="form-input" type="text" placeholder="公司名称（选填）"></div>
+          <div class="form-group"><label class="form-label">邮箱 *</label><input id="reg-email" class="form-input" type="email" placeholder="you@company.com"></div>
+          <div class="form-group"><label class="form-label">密码 *（至少6位）</label><input id="reg-password" class="form-input" type="password" placeholder="设置密码" minlength="6"></div>
+          <div class="form-group"><label class="form-label">电话</label><input id="reg-phone" class="form-input" type="tel" placeholder="+86（选填）"></div>
+          <div id="register-error" style="color:var(--red);font-size:12px;margin-bottom:10px;display:none"></div>
+          <button id="register-btn" class="modal-join-btn" onclick="doRegister()" style="margin-bottom:10px">创建账户</button>
+          <div style="text-align:center;font-size:11px;color:var(--text3)">已有账户？<a onclick="switchToLogin()" style="color:var(--accent);cursor:pointer">立即登录</a></div>
         </div>
-        <div class="form-group" id="nameGroup" style="display:none">
-          <label class="form-label">您的称呼</label>
-          <input id="login-name" class="form-input" type="text" placeholder="张三（先生/女士）">
-        </div>
-        <div class="form-group" id="cityGroup" style="display:none">
-          <label class="form-label">所在城市</label>
-          <input id="login-city" class="form-input" type="text" placeholder="例：苏州、杭州">
-        </div>
-        <div id="login-error" style="color:var(--red);font-size:12px;margin-bottom:10px;display:none"></div>
-        <button id="login-btn" class="modal-join-btn" onclick="doLogin()" disabled style="margin-bottom:10px">请先获取验证码</button>
-        <div style="text-align:center;font-size:11px;color:var(--text3)">未注册用户将自动创建账号</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Detail Modal -->
+<!-- Detail Modal --><!-- Detail Modal -->
 <div class="modal-overlay" id="detailModal">
   <div class="modal">
     <div class="modal-header">
@@ -609,10 +606,6 @@ var currentTier={qty:3,rate:0.90};
 var isLoggedIn=false;
 var currentUser=null;
 var token=localStorage.getItem("gb_token")||null;
-var loginStep=0;
-var currentModalProduct=null;
-var currentModalTier=null;
-var cdInterval=null;
 
 function getHeaders(){return token?{"Authorization":"Bearer "+token,"Content-Type":"application/json"}:{"Content-Type":"application/json"};}
 
@@ -628,60 +621,83 @@ async function api(path,opts){
 }
 
 function initAuth(){
-  if(!token)return updateNav(null);
-  api("/api/auth/me").then(function(d){if(d&&d.ok){currentUser=d.user;isLoggedIn=true;updateNav(currentUser);}else{logout();}});
+  fetch("https://group.solaripple.com/api/auth/me",{credentials:"include"})
+    .then(function(r){return r.json()})
+    .then(function(d){if(d&&d.success){currentUser=d.user;isLoggedIn=true;updateNav(currentUser);}else{logout();}})
+    .catch(function(){logout();});
 }
 
 function updateNav(user){
   var area=document.getElementById("nav-user-area");
   if(user){
-    area.innerHTML='<div class="nav-user"><div class="avatar">'+user.name.charAt(0)+'</div><span>'+user.name+'</span></div>';
+    var name=user.name||user.email||"";
+    area.innerHTML='<div class="nav-user"><div class="avatar">'+name.charAt(0).toUpperCase()+'</div><span>'+name+'</span></div>';
   }else{
     area.innerHTML='<button class="nav-home" onclick="showLoginModal()">登录 / 注册</button>';
   }
 }
 
-function logout(){token=null;currentUser=null;isLoggedIn=false;localStorage.removeItem("gb_token");updateNav(null);}
-
-function showLoginModal(){document.getElementById("loginModal").classList.add("show");resetLoginForm();}
-function closeLoginModal(){document.getElementById("loginModal").classList.remove("show");}
-
-function resetLoginForm(){
-  loginStep=0;
-  document.getElementById("codeGroup").style.display="none";
-  document.getElementById("nameGroup").style.display="none";
-  document.getElementById("cityGroup").style.display="none";
-  document.getElementById("login-error").style.display="none";
-  document.getElementById("login-btn").disabled=true;
-  document.getElementById("login-btn").textContent="请先获取验证码";
-  document.getElementById("sendCodeBtn").disabled=false;
-  document.getElementById("sendCodeBtn").textContent="发送验证码";
+function logout(){
+  fetch("https://group.solaripple.com/api/auth/logout",{method:"POST",credentials:"include"}).catch(function(){});
+  token=null;currentUser=null;isLoggedIn=false;localStorage.removeItem("gb_token");updateNav(null);
 }
 
-function sendCode(){
-  var phone=document.getElementById("login-phone").value.trim();
-  if(!phone||phone.length<11){alert("请输入正确的手机号");return;}
-  var btn=document.getElementById("sendCodeBtn");
-  btn.disabled=true;btn.textContent="发送中...";
-  fetch("/api/auth/send_code",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:phone})})
-    .then(function(r){return r.json()})
+function showLoginModal(){switchToLogin();document.getElementById("loginModal").classList.add("show");}
+function closeLoginModal(){document.getElementById("loginModal").classList.remove("show");}
+
+function switchToLogin(){
+  document.getElementById("loginPanel").style.display="block";
+  document.getElementById("registerPanel").style.display="none";
+}
+function switchToRegister(){
+  document.getElementById("loginPanel").style.display="none";
+  document.getElementById("registerPanel").style.display="block";
+}
+
+function doLogin(){
+  var email=document.getElementById("login-email").value.trim();
+  var password=document.getElementById("login-password").value;
+  if(!email||!password){document.getElementById("login-error").textContent="请输入邮箱和密码";document.getElementById("login-error").style.display="block";return;}
+  var btn=document.getElementById("login-btn");
+  var err=document.getElementById("login-error");
+  btn.disabled=true;btn.textContent="登录中...";err.style.display="none";
+  fetch("https://group.solaripple.com/api/auth/login",{
+    method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({email:email,password:password})
+  }).then(function(r){return r.json()})
     .then(function(d){
-      btn.disabled=false;
-      if(d.ok){
-        loginStep=1;
-        document.getElementById("codeGroup").style.display="block";
-        document.getElementById("nameGroup").style.display="block";
-        document.getElementById("cityGroup").style.display="block";
-        document.getElementById("login-btn").disabled=false;
-        document.getElementById("login-btn").textContent="验证并登录";
-        document.getElementById("sendCodeBtn").textContent="已发送 ✓";
-        if(d.dev_mode)console.log("[DEV] code:",d.code);
-      }else{
-        var err=document.getElementById("login-error");
-        err.textContent=d.error||"发送失败";err.style.display="block";
-        btn.textContent="重新发送";
-      }
-    });
+      if(d.success){
+        token=d.token;localStorage.setItem("gb_token",token);
+        currentUser=d.user;isLoggedIn=true;updateNav(currentUser);closeLoginModal();
+      }else{err.textContent=d.error||"登录失败";err.style.display="block";}
+    })
+    .catch(function(){err.textContent="网络错误";err.style.display="block";})
+    .finally(function(){btn.disabled=false;btn.textContent="登录";});
+}
+
+function doRegister(){
+  var name=document.getElementById("reg-name").value.trim();
+  var company=document.getElementById("reg-company").value.trim();
+  var email=document.getElementById("reg-email").value.trim();
+  var password=document.getElementById("reg-password").value;
+  var phone=document.getElementById("reg-phone").value.trim();
+  if(!name||!email||!password){document.getElementById("register-error").textContent="姓名、邮箱、密码为必填项";document.getElementById("register-error").style.display="block";return;}
+  if(password.length<6){document.getElementById("register-error").textContent="密码至少6位";document.getElementById("register-error").style.display="block";return;}
+  var btn=document.getElementById("register-btn");
+  var err=document.getElementById("register-error");
+  btn.disabled=true;btn.textContent="创建中...";err.style.display="none";
+  fetch("https://group.solaripple.com/api/auth/register",{
+    method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({name:name,company:company,email:email,password:password,phone:phone})
+  }).then(function(r){return r.json()})
+    .then(function(d){
+      if(d.success){
+        token=d.token;localStorage.setItem("gb_token",token);
+        currentUser=d.user;isLoggedIn=true;updateNav(currentUser);closeLoginModal();
+      }else{err.textContent=d.error||"注册失败";err.style.display="block";}
+    })
+    .catch(function(){err.textContent="网络错误";err.style.display="block";})
+    .finally(function(){btn.disabled=false;btn.textContent="创建账户";});
 }
 
 function doLogin(){
